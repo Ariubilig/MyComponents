@@ -1,10 +1,8 @@
-// shud App dere importlod ajilan 
-
 import "./bg.css";
+
 
 function Bg() {
   return (
-    <>
     <div className="gradient-bg">
         <svg xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -24,7 +22,6 @@ function Bg() {
           <div className="interactive"></div>
         </div>
     </div>
-    </>
   )
 }
 

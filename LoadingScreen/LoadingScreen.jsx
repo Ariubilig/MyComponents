@@ -1,4 +1,4 @@
-// One loadingNames = 500
+// One loadingNames = 500ms
 
 import { useState } from "react";
 import Loading from './load/load.jsx';
@@ -25,7 +25,9 @@ function App() {
 }
 
 export default App;
+
 ////////////////////////////////////////////////////
+
 import './load.css';
 import React from 'react';
 
