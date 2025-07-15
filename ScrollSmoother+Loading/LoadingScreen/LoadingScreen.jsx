@@ -1,7 +1,7 @@
 // One loadingNames = 500ms
 
 import { useState } from "react";
-import Loading from './load/load.jsx';
+import Loading from './load/load.js';
 
 function App() {
 
