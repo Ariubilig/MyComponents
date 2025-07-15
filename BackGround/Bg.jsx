@@ -1,6 +1,5 @@
 import "./bg.css";
 
-
 function Bg() {
   return (
     <div className="gradient-bg">

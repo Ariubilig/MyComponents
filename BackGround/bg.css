@@ -1,6 +1,6 @@
 :root {
-  --color-bg1: hsl(0, 0%, 0%);
-  --color-bg2: hsl(0, 0%, 0%);
+  --color-bg1: hsl(0, 0%, 0%); /* G color change */
+  --color-bg2: hsl(0, 0%, 0%); /* G color change */
   --color3: 100, 100, 100;
   --blending: screen;
   --circle-size: 120%;
