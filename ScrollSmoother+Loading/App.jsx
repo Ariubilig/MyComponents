@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import Load from './load';
 import { useScrollSmoother } from './useScrollSmoother';
