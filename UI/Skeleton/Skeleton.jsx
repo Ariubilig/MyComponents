@@ -2,6 +2,7 @@ import React from "react";
 import "./Skeleton.css";
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
+
 export function Skeleton({
   variant = "rect",
   width,
@@ -45,5 +46,3 @@ export function Skeleton({
 
   return <span className={baseClass} style={inlineStyle} />;
 }
-
-

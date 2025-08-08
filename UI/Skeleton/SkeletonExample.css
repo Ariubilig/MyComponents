@@ -1,0 +1,111 @@
+.skeleton-demo {
+  display: grid;
+  gap: 24px;
+}
+
+.demo-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.card-block {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+}
+
+/* Sizes for Skeleton elements via className (avoid inline style) */
+.skeleton-card {
+  display: block;
+  width: 100%;
+  height: 160px;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.size-48 {
+  width: 48px;
+  height: 48px;
+}
+
+/* Loaded text style */
+.loaded-paragraph {
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  display: grid;
+}
+
+.skeleton-card-img {
+  width: 100%;
+  height: 140px;
+}
+
+.card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-body {
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.card-text {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+/* Avatar row */
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-texts {
+  display: grid;
+  gap: 8px;
+  width: 200px;
+}
+
+.avatar {
+  border-radius: 9999px;
+}
+
+.avatar-loaded .name {
+  font-weight: 600;
+}
+
+.avatar-loaded .role {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+
