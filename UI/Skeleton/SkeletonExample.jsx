@@ -3,7 +3,9 @@ import { Skeleton } from "../../UI/Skeleton/Skeleton";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function SkeletonExample() {
+
+function SkeletonExample() {
+
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
 
@@ -101,4 +103,4 @@ export default function SkeletonExample() {
   );
 }
 
-
+export default SkeletonExample;

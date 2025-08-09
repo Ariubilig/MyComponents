@@ -2,7 +2,7 @@ import React from "react";
 import "./Breadcrumb.css";
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
-export function Breadcrumb({
+function Breadcrumb({
   items = [],
   separator = "/",
   className,
@@ -40,4 +40,4 @@ export function Breadcrumb({
   );
 }
 
-
+export default Breadcrumb;

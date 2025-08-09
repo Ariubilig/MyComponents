@@ -3,7 +3,7 @@ import "./Skeleton.css";
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
 
-export function Skeleton({
+function Skeleton({
   variant = "rect",
   width,
   height,
@@ -46,3 +46,5 @@ export function Skeleton({
 
   return <span className={baseClass} style={inlineStyle} />;
 }
+
+export default Skeleton;

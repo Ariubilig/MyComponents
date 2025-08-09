@@ -37,7 +37,7 @@ function usePagination({ currentPage, totalPages, siblingCount, boundaryCount })
   return [...firstPages, "ELLIPSIS", ...middlePages, "ELLIPSIS", ...lastPages];
 }
 
-export function Pagination({
+function Pagination({
   currentPage,
   totalPages,
   onPageChange,
@@ -140,4 +140,4 @@ export function Pagination({
   );
 }
 
-
+export default Pagination;

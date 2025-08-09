@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "../../UI/Breadcrumb/Breadcrumb";
 
-export default function BreadcrumbExample() {
+function BreadcrumbExample() {
   return (
 
       <Breadcrumb
@@ -15,3 +15,5 @@ export default function BreadcrumbExample() {
       
   );
 }
+
+export default BreadcrumbExample;

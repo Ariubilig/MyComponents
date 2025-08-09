@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pagination } from "../../UI/Pagination/Pagination";
 
-export default function PaginationExample() {
+function PaginationExample() {
   const [page, setPage] = useState(1);
 
   return (
@@ -21,4 +21,4 @@ export default function PaginationExample() {
   );
 }
 
-
+export default PaginationExample;
