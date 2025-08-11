@@ -3,12 +3,12 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from "gsap";
 
+
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export const useScrollSmoother = (wrapperRef, loadingDone) => {
   useEffect(() => {
     if (loadingDone && wrapperRef.current) {
-      document.querySelector('.gradient-bg')?.classList.add('fixed-bg');
       
       ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
@@ -18,6 +18,7 @@ export const useScrollSmoother = (wrapperRef, loadingDone) => {
         normalizeScroll: true,
         ignoreMobileResize: true
       });
+
     }
   }, [loadingDone, wrapperRef]);
 };

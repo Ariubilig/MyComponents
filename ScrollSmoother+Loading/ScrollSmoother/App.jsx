@@ -1,15 +1,17 @@
 import { useRef } from "react";
 import { useScrollSmoother } from './useScrollSmoother';
 
+
 function App() {
+
   const smoothWrapperRef = useRef(null);
   useScrollSmoother(smoothWrapperRef);
 
   return (
     <>
 
-
-    <Navbar />
+    
+    <Navbar /> 
 
     <div id="smooth-wrapper" ref={smoothWrapperRef}>
       <div id="smooth-content">

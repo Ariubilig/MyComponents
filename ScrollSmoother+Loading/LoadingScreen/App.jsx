@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Loading from './load/load.js';
+import Loading from './LoadingScreen/LoadingScreen.jsx';
+
 
 function App() {
 
@@ -13,8 +14,8 @@ function App() {
       ) : (
         <>
           
-          <Aaa /> // ene dotor route bnu func bnu hamgu
-          
+        <h1></h1>
+
         </>
       )}
 

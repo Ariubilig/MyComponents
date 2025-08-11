@@ -1,9 +1,9 @@
-import './load.css';
 import React from 'react';
+// import './load.css';
 
 const loadingNames = ["RARI", "EMURACS", "SITAN", "SANDAN", "BELLATTIX", "NOEL"];
 
-const Load = ({ onFinish }) => {
+const Loading = ({ onFinish }) => {
   const [currentLoadName, setCurrentLoadName] = React.useState(0);
 
   React.useEffect(() => {
@@ -12,8 +12,10 @@ const Load = ({ onFinish }) => {
     }, 500);
 
     const timer = setTimeout(() => {
-      if (onFinish) onFinish();
-    }, 3000);
+      if (typeof onFinish === 'function') {
+        onFinish();
+      }
+    }, loadingNames.length * 500); // 500ms per name
 
     return () => {
       clearInterval(interval);
@@ -22,12 +24,10 @@ const Load = ({ onFinish }) => {
   }, [onFinish]);
 
   return (
-
     <div className="loading-screen">
       {loadingNames[currentLoadName]}
     </div>
-
   );
 };
 
-export default Load;
+export default Loading;
