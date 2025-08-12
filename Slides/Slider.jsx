@@ -1,10 +1,12 @@
 import React from "react";
-import { useCarousel } from "./hooks/useCarousel";
-import { useMarquee } from "./hooks/useMarquee";
-import { buildProgressBars, updateProgressBars, createAndAnimateSlide } from "./utils/slideUtils";
-import slides from "../slides.js";
+import { useCarousel } from "./hooks/useCarousel.js";
+import { useMarquee } from "./hooks/useMarquee.js";
+import { buildProgressBars, updateProgressBars, createAndAnimateSlide } from "./utils/slideUtils.js";
+import "./Slider.css";
 
-export default function App() {
+
+export default function Slider() {
+  
   const carouselRef = useCarousel();
   const { initMarqueeAnimation } = useMarquee();
 

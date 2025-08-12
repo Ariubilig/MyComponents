@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import slides from "../../slides.js";
+import slides from "./img.js";
 
 export function createAndAnimateSlide(root, index, isScrollingForward, initMarqueeAnimation) {
   const carousel = root;

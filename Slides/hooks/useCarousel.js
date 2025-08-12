@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import slides from "../../slides.js";
+import slides from "../utils/img.js";
 import { createAndAnimateSlide, updateProgressBars } from "../utils/slideUtils";
 
 gsap.registerPlugin(ScrollTrigger);
