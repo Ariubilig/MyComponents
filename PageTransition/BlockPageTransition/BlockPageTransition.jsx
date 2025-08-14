@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 /**
  * ReusablePageTransition
  * - Drop-in wrapper to animate route transitions in Next.js App Router
- * - Self-contained styles via styled-jsx, no global CSS required
+ * - Self-contained styles via inline styles, no global CSS required
  *
  * Props:
  * - blockCount: number of covering blocks (default 20)
@@ -41,6 +41,26 @@ export default function BlockPageTransition({
     reveal: 0.4,
     blockStagger: 0.02,
     ...durations,
+  };
+
+  // Styles as objects
+  const overlayStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100svh',
+    display: 'flex',
+    pointerEvents: 'none',
+    zIndex: 9999,
+  };
+
+  const blockStyle = {
+    flex: 1,
+    height: '100%',
+    background: overlayColor,
+    transform: 'scaleX(0)',
+    transformOrigin: 'left',
   };
 
   const handleRouteChange = useCallback(
@@ -132,7 +152,8 @@ export default function BlockPageTransition({
       const count = Math.max(1, Number(blockCount) || 20);
       for (let i = 0; i < count; i++) {
         const block = document.createElement("div");
-        block.className = "pt-block";
+        // Apply styles directly to the element
+        Object.assign(block.style, blockStyle);
         overlayRef.current.appendChild(block);
         blocksRef.current.push(block);
       }
@@ -148,15 +169,15 @@ export default function BlockPageTransition({
       links.forEach((link) => link.removeEventListener("click", onAnchorClick));
       if (revealTimeoutRef.current) clearTimeout(revealTimeoutRef.current);
     };
-  }, [pathname, onAnchorClick, revealPage, blockCount, interceptLinks]);
+  }, [pathname, onAnchorClick, revealPage, blockCount, interceptLinks, blockStyle]);
 
   // Reveal only after a navigation occurred (not on initial load)
   useEffect(() => {
     if (isTransitioning.current) {
       revealPage();
     }
-  }, [pathname]);
-  //////////////////////////////////////////
+  }, [pathname, revealPage]);
+
   const coverPage = (url) => {
     if (overlayRef.current) overlayRef.current.style.pointerEvents = "auto";
 
@@ -173,27 +194,8 @@ export default function BlockPageTransition({
 
   return (
     <>
-      <div ref={overlayRef} className="pt-overlay" />
+      <div ref={overlayRef} style={overlayStyle} />
       {children}
-      <style jsx>{`
-        .pt-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100svh;
-          display: flex;
-          pointer-events: none;
-          z-index: 9999;
-        }
-        .pt-block {
-          flex: 1;
-          height: 100%;
-          background: ${overlayColor};
-          transform: scaleX(0);
-          transform-origin: left;
-        }
-      `}</style>
     </>
   );
 }

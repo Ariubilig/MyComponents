@@ -7,7 +7,7 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-export default function Text({ children, animateOnScroll = true, delay = 0 }) {
+export default function Up({ children, animateOnScroll = true, delay = 0 }) {
   const containerRef = useRef(null);
   const elementRefs = useRef([]);
   const splitRefs = useRef([]);
