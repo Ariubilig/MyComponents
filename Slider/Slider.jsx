@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Slider = () => {
+  
   const sliderRef = useRef(null);
   const navigate = useNavigate();
 
