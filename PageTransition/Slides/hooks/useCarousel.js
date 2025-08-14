@@ -8,7 +8,9 @@ import { useMarquee } from "./useMarquee.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 export function useCarousel() {
+
   const carouselRef = useRef(null);
   const { initMarqueeAnimation } = useMarquee();
 

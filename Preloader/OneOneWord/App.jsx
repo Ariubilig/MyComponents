@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Loading from './LoadingScreen/LoadingScreen.jsx';
+import Loading from './LoadingScreen/LoadingScreen.js';
 
 
 function App() {

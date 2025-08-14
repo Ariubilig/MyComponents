@@ -9,8 +9,10 @@ export const useScrollSmoother = (wrapperRef, loadingFinished) => {
   useEffect(() => {
     if (!loadingFinished || !wrapperRef.current) return;
 
+    let smoother = null;
+    
     const timer = setTimeout(() => {
-      const smoother = ScrollSmoother.create({
+      smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
         smooth: 1.5,
@@ -18,16 +20,13 @@ export const useScrollSmoother = (wrapperRef, loadingFinished) => {
         normalizeScroll: true,
         ignoreMobileResize: true
       });
-
-      return () => {
-        if (smoother) {
-          smoother.kill();
-        }
-      };
     }, 100);
 
     return () => {
       clearTimeout(timer);
+      if (smoother) {
+        smoother.kill();
+      }
     };
   }, [wrapperRef, loadingFinished]);
 };

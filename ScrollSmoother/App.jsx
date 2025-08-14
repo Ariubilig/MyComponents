@@ -5,7 +5,7 @@ import { useScrollSmoother } from './useScrollSmoother';
 function App() {
 
   const smoothWrapperRef = useRef(null);
-  useScrollSmoother(smoothWrapperRef);
+  useScrollSmoother(smoothWrapperRef, loadingFinished);
 
   return (
     <>

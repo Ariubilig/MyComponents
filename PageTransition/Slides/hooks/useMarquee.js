@@ -1,7 +1,8 @@
-import { useEffect } from "react";
 import gsap from "gsap";
 
+
 export function useMarquee() {
+
   const initMarqueeAnimation = (h1Element) => {
     if (!h1Element) return;
 
