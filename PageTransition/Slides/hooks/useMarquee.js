@@ -5,6 +5,12 @@ export function useMarquee() {
   const initMarqueeAnimation = (h1Element) => {
     if (!h1Element) return;
 
+    // Clean up existing animation first
+    if (h1Element._marqueeTick) {
+      gsap.ticker.remove(h1Element._marqueeTick);
+      h1Element._marqueeTick = null;
+    }
+
     const baseText = h1Element.getAttribute("data-text") || h1Element.textContent.trim();
     h1Element.setAttribute("data-text", baseText);
     h1Element.innerHTML = `<span class="marquee-unit">${baseText}</span><span class="marquee-unit">${baseText}</span>`;
@@ -15,10 +21,6 @@ export function useMarquee() {
     requestAnimationFrame(() => {
       const unitWidth = firstUnit.offsetWidth;
       const pixelsPerSecond = 150; // speed
-
-      if (h1Element._marqueeTick) {
-        gsap.ticker.remove(h1Element._marqueeTick);
-      }
 
       let x = 0;
       const tick = () => {

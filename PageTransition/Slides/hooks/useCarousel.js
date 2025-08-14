@@ -4,11 +4,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import slides from "../utils/img.js";
 import { createAndAnimateSlide, updateProgressBars } from "../utils/slideUtils";
+import { useMarquee } from "./useMarquee.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function useCarousel() {
   const carouselRef = useRef(null);
+  const { initMarqueeAnimation } = useMarquee();
 
   useEffect(() => {
     let activeSlideIndex = 0;
@@ -32,6 +34,12 @@ export function useCarousel() {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       });
       gsap.set(initialSlide.querySelector(".slide-img img"), { y: "0%" });
+      
+      // Initialize marquee animation for initial slide
+      const initialH1 = initialSlide.querySelector(".marquee-container h1");
+      if (initialH1) {
+        initMarqueeAnimation(initialH1);
+      }
     }
 
     const scrollTrigger = ScrollTrigger.create({
@@ -61,15 +69,9 @@ export function useCarousel() {
         if (targetSlideIndex !== activeSlideIndex) {
           isAnimatingSlide = true;
           console.log(`Switching from slide ${activeSlideIndex} to ${targetSlideIndex}`);
-          try {
-            // We need to pass a function that can be called from slideUtils
-            const result = createAndAnimateSlide(root, targetSlideIndex, isScrollingForward, (h1Element) => {
-              // This will be replaced by the actual marquee function from useMarquee
-              if (h1Element) {
-                const baseText = h1Element.textContent.trim();
-                h1Element.innerHTML = `<span class="marquee-unit">${baseText}</span><span class="marquee-unit">${baseText}</span>`;
-              }
-            });
+                      try {
+              // Pass the actual marquee function from useMarquee
+              const result = createAndAnimateSlide(root, targetSlideIndex, isScrollingForward, initMarqueeAnimation);
             
             if (result) {
               activeSlideIndex = targetSlideIndex;

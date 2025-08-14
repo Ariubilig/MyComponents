@@ -25,7 +25,7 @@ export function createAndAnimateSlide(root, index, isScrollingForward, initMarqu
           </div>
           <div class="slide-marquee">
           <div class="marquee-container">
-              <h1>${slideData.marquee}</h1>
+              <h1 data-text="${slideData.marquee}">${slideData.marquee}</h1>
           </div>
           </div>
       </div>

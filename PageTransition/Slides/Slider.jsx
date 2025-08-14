@@ -1,27 +1,20 @@
 import React from "react";
 import { useCarousel } from "./hooks/useCarousel.js";
-import { useMarquee } from "./hooks/useMarquee.js";
-import { buildProgressBars, updateProgressBars, createAndAnimateSlide } from "./utils/slideUtils.js";
+import { buildProgressBars } from "./utils/slideUtils.js";
 import "./Slider.css";
 
 
 export default function Slider() {
   
   const carouselRef = useCarousel();
-  const { initMarqueeAnimation } = useMarquee();
 
-  // Initialize marquee and progress bars when component mounts
+  // Initialize progress bars when component mounts
   React.useEffect(() => {
     const root = carouselRef.current;
     if (!root) return;
 
-    const initialSlide = root.querySelector(".slide");
-    if (initialSlide) {
-      initMarqueeAnimation(initialSlide.querySelector(".marquee-container h1"));
-    }
-
     buildProgressBars(root);
-  }, [carouselRef, initMarqueeAnimation]);
+  }, [carouselRef]);
 
   return (
     <>
@@ -53,7 +46,7 @@ export default function Slider() {
             </div>
             <div className="slide-marquee">
               <div className="marquee-container">
-                <h1>Eclipse Interactive Art Portfolio</h1>
+                <h1 data-text="Eclipse Interactive Art Portfolio">Eclipse Interactive Art Portfolio</h1>
               </div>
             </div>
           </div>
