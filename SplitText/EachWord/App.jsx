@@ -8,8 +8,8 @@ function App() {
 
 
     <Each delay={0.5}>
-`     <h1>Timeless Form</h1>
-    </Each>`
+      <h1>Timeless Form</h1>
+    </Each>
 
 
     </>
