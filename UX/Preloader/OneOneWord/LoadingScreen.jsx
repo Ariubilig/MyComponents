@@ -1,9 +1,11 @@
 import React from 'react';
 import './LoadingScreen.css';
 
+
 const loadingNames = ["RARI", "EMURACS", "SITAN", "SANDAN", "BELLATTIX", "NOEL"];
 
 const Loading = ({ onLoadingFinish }) => {
+
   const [currentLoadName, setCurrentLoadName] = React.useState(0);
   const [shouldShow, setShouldShow] = React.useState(true);
 

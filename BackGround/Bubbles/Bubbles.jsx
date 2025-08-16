@@ -1,6 +1,6 @@
 import "./bg.css";
 
-function Bg() {
+function Bubbles() {
   return (
     <div className="gradient-bg">
         <svg xmlns="http://www.w3.org/2000/svg">
@@ -24,4 +24,4 @@ function Bg() {
   )
 }
 
-export default Bg
+export default Bubbles
