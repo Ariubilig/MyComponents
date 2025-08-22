@@ -1,0 +1,12 @@
+body {
+  background-color: hsl(0, 0%, 80%);
+  color: rgb(0, 0, 0);
+}
+#smooth-wrapper {
+  overflow: hidden;
+}
+
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+}

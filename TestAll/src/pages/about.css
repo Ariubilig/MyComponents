@@ -1,0 +1,91 @@
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+}
+.footer-title {
+  letter-spacing: 0.1em;
+}
+/* About page layout */
+.about-page {
+  padding: 2rem 2rem 8rem;
+}
+.about-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.about-title {
+  font-size: 3rem;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.about-close {
+  background: transparent;
+  border: none;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.about-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr;
+  gap: 2rem;
+}
+.about-bio {
+  max-width: 56ch;
+  line-height: 1.6;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+.about-col .about-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+}
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+}
+.about-list.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.25rem;
+}
+.about-actions {
+  align-self: start;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+.resume-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .about-title {
+    font-size: 2rem;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
