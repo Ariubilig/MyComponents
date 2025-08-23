@@ -10,6 +10,7 @@ import Cart from './pages/Cart';
 import Slider from './Slides/Slider';
 import ScrollSlider from './Slider/ScrollSlider';
 import AboutPage from "./pages/about";
+import Overview from "./overview/Overview";
 
 import { useScrollSmoother } from './hooks/useScrollSmoother+load';
 import Marquee from './InfObjectMove/Marquee';
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/Marquee" element={<Marquee />} />
                 <Route path="/ScrollSlider" element={<ScrollSlider />} />
                 <Route path="/AboutPage" element={<AboutPage />} />
+                <Route path="/Overview" element={<Overview />} />
 
                 
               </Routes>

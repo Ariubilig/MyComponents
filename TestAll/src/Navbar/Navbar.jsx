@@ -13,6 +13,7 @@ function Navbar() {
             <Link  to="/Marquee" >Marquee</Link>
             <Link  to="/ScrollSlider" >ScrollSlider</Link>
             <Link  to="/AboutPage" >About</Link>
+            <Link  to="/Overview" >Overview</Link>
         </div>
 
         </>
