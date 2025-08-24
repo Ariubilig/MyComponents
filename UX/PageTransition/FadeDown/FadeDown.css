@@ -1,0 +1,56 @@
+.page-transition-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+.page-transition-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+z-index: 9999;
+pointer-events: none;
+clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+}
+
+/* Fallback background when no image */
+.page-transition-overlay:not([style*="background-image"]) {
+background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+.page-transition-content {
+width: 100%;
+min-height: 100vh;
+position: relative;
+opacity: 1;
+}
+
+.page-transition-overlay::after {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.3);
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.page-transition-overlay[style*="background-image"]::after {
+opacity: 1;
+}
+
+.page-transition-container.transitioning {
+overflow: hidden;
+}
+
+.page-transition-content > div {
+width: 100%;
+}
