@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import FadeDown from './FadeDown';
+import FadeDown from './FadeDownUp.jsx';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home.jsx';
 import AboutPage from './pages/AboutPage';

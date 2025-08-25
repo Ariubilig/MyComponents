@@ -1,0 +1,109 @@
+.page-transition-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  pointer-events: none;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  /* Ensure overlay is always on top */
+  will-change: clip-path;
+  
+  /* Flexbox to center the route text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fallback background when no image */
+.page-transition-overlay:not([style*="background-image"]) {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+.page-transition-content {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  /* Remove the default opacity: 1 since we control it in JS */
+}
+
+.page-transition-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.page-transition-overlay[style*="background-image"]::after {
+  opacity: 1;
+}
+
+.page-transition-container.transitioning {
+  overflow: hidden;
+}
+
+.page-transition-content > div {
+  width: 100%;
+}
+
+/* Additional safety - ensure overlay covers everything */
+.page-transition-overlay {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Route text styling */
+.page-transition-route-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-align: center;
+  opacity: 0;
+  z-index: 2;
+  position: relative;
+  
+  /* Subtle text shadow for better readability */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  
+  /* Animation properties */
+  will-change: opacity;
+}
+
+/* Optional: Add a subtle glow effect */
+.page-transition-route-text {
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive font sizing */
+@media (min-width: 768px) {
+  .page-transition-route-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-transition-route-text {
+    font-size: 1.8rem;
+  }
+}

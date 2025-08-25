@@ -31,8 +31,8 @@ function App() {
         <Loading onLoadingFinish={() => setLoadingFinished(true)} />
       ) : (
         <>
-        {/* <PageTransition> */}
-        <FadeDown>
+        <PageTransition>
+        {/* <FadeDown> */}
           
 
           <Navbar /> 
@@ -56,8 +56,8 @@ function App() {
             </div>
           </div>
 
-        </FadeDown>
-        {/* </PageTransition> */}
+        {/* </FadeDown> */}
+        </PageTransition>
         </>
       )}
     </>
