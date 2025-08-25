@@ -5,17 +5,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 
 /**
- * ReusablePageTransition
- * - Drop-in wrapper to animate route transitions in Next.js App Router
+ * BlockPageTransition
+ * - Drop-in wrapper to animate route transitions in React Router
  * - Self-contained styles via inline styles, no global CSS required
  *
  * Props:
  * - blockCount: number of covering blocks (default 20)
  * - overlayColor: color of cover blocks (default "#222")
- * - backgroundColor: used when logo fills (default "#e3e4d8")
- * - showLogo: toggle logo overlay (default true)
- * - renderLogo: optional render function ({ref}) => ReactNode (must render an SVG with a <path>)
- * - durations: { cover: .4, reveal: .4, blockStagger: .02, logoDraw: 2, logoFill: 1, logoFade: .25 }
+ * - durations: { cover: .4, reveal: .4, blockStagger: .02 }
  * - interceptLinks: intercept internal anchor clicks (default true)
  * - onTransitionStart / onTransitionEnd: lifecycle callbacks
  */
@@ -70,8 +67,7 @@ export default function BlockPageTransition({
       if (onTransitionStart) onTransitionStart(url);
       coverPage(url);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [onTransitionStart]
   );
 
   const onAnchorClick = useCallback(
@@ -124,6 +120,7 @@ export default function BlockPageTransition({
       },
     });
 
+    // Fallback timeout to ensure transition completes
     revealTimeoutRef.current = setTimeout(() => {
       if (blocksRef.current.length > 0) {
         const firstBlock = blocksRef.current[0];
@@ -144,15 +141,29 @@ export default function BlockPageTransition({
     }, 1000);
   }, [resolvedDurations, onTransitionEnd]);
 
+  const coverPage = useCallback((url) => {
+    if (overlayRef.current) overlayRef.current.style.pointerEvents = "auto";
+
+    const tl = gsap.timeline({ onComplete: () => navigate(url) });
+
+    tl.to(blocksRef.current, {
+      scaleX: 1,
+      duration: resolvedDurations.cover,
+      stagger: resolvedDurations.blockStagger,
+      ease: "power2.out",
+      transformOrigin: "left",
+    });
+  }, [navigate, resolvedDurations]);
+
   useEffect(() => {
     const createBlocks = () => {
       if (!overlayRef.current) return;
       overlayRef.current.innerHTML = "";
       blocksRef.current = [];
       const count = Math.max(1, Number(blockCount) || 20);
+      
       for (let i = 0; i < count; i++) {
         const block = document.createElement("div");
-        // Apply styles directly to the element
         Object.assign(block.style, blockStyle);
         overlayRef.current.appendChild(block);
         blocksRef.current.push(block);
@@ -169,28 +180,14 @@ export default function BlockPageTransition({
       links.forEach((link) => link.removeEventListener("click", onAnchorClick));
       if (revealTimeoutRef.current) clearTimeout(revealTimeoutRef.current);
     };
-  }, [pathname, onAnchorClick, revealPage, blockCount, interceptLinks, blockStyle]);
+  }, [pathname, onAnchorClick, blockCount, interceptLinks, blockStyle]);
 
-  // Reveal only after a navigation occurred (not on initial load)
+  // Reveal page after navigation
   useEffect(() => {
     if (isTransitioning.current) {
       revealPage();
     }
   }, [pathname, revealPage]);
-
-  const coverPage = (url) => {
-    if (overlayRef.current) overlayRef.current.style.pointerEvents = "auto";
-
-    const tl = gsap.timeline({ onComplete: () => navigate(url) });
-
-    tl.to(blocksRef.current, {
-      scaleX: 1,
-      duration: resolvedDurations.cover,
-      stagger: resolvedDurations.blockStagger,
-      ease: "power2.out",
-      transformOrigin: "left",
-    });
-  };
 
   return (
     <>

@@ -15,6 +15,7 @@ import Overview from "./overview/Overview";
 import { useScrollSmoother } from './hooks/useScrollSmoother+load';
 import Marquee from './InfObjectMove/Marquee';
 import PageTransition from './PageTransition/PageTransition';
+import FadeDown from "./FadeDown/FadeDown";
 
 
 function App() {
@@ -30,7 +31,9 @@ function App() {
         <Loading onLoadingFinish={() => setLoadingFinished(true)} />
       ) : (
         <>
-        <PageTransition>
+        {/* <PageTransition> */}
+        <FadeDown>
+          
 
           <Navbar /> 
 
@@ -53,7 +56,8 @@ function App() {
             </div>
           </div>
 
-        </PageTransition>
+        </FadeDown>
+        {/* </PageTransition> */}
         </>
       )}
     </>
