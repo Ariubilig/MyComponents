@@ -6,7 +6,7 @@ export default function  Cart() {
     return(
         <>
             
-        
+        <br /><br /><br />
         {/* Basic usage */}
         <Each delay={0.5}>
             <h1>Timeless Form</h1>
@@ -55,6 +55,15 @@ export default function  Cart() {
             <h5>Using a section wrapper instead of div</h5>
         </Each>
 
+        <br /><br /><br /><br /><br /><br /><br />        <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br />
+
+        <Each delay={0.5}>
+            <h1>Timeless Form</h1>
+        </Each>
+        
         </>
     )
 }

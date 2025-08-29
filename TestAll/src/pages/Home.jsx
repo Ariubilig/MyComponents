@@ -48,6 +48,10 @@ export default function  home() {
         <h4>This animates immediately without scroll trigger</h4>
       </Up>
 
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <Up delay={1}>
+        <h1>We craft identities and experiences for the bold.</h1>
+      </Up>
       </>
     )
 }
