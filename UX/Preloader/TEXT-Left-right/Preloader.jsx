@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import CustomEase from "gsap/CustomEase";
@@ -13,13 +13,27 @@ export default function Preloader({
   duration = 2,
   barColor = "",
   maxValue = 100,
-  onComplete
+  onComplete,
+  storageKey = "preloaderSeen" // key for session storage
 }) {
   const container = useRef();
+  const [shouldShow, setShouldShow] = useState(true);
   const customEase = CustomEase.create("custom", ".87,0,.13,1");
+
+  // Check if preloader already seen this session
+  useEffect(() => {
+    if (sessionStorage.getItem(storageKey)) {
+      setShouldShow(false);
+      if (typeof onComplete === "function") onComplete();
+    } else {
+      sessionStorage.setItem(storageKey, "true");
+    }
+  }, [onComplete, storageKey]);
 
   useGSAP(
     () => {
+      if (!shouldShow) return;
+
       if (typeof window !== "undefined" && document.readyState === "complete") {
         const counter = document.getElementById("counter");
         const progressBar = document.querySelector(".progress-bar");
@@ -37,7 +51,7 @@ export default function Preloader({
             snap: { innerHTML: 1 },
           });
         }
-        gsap.to(progressBar, {
+        gsap.to(".progress-bar", {
           opacity: 0,
           duration: 0.3,
           delay: duration + 0.3,
@@ -47,8 +61,10 @@ export default function Preloader({
         });
       }
     },
-    { scope: container, dependencies: [loadingText, duration, barColor, maxValue, onComplete] }
+    { scope: container, dependencies: [shouldShow, loadingText, duration, barColor, maxValue, onComplete] }
   );
+
+  if (!shouldShow) return null; // skip rendering preloader if already seen
 
   return (
     <div className="preloader" ref={container}>

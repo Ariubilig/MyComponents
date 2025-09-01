@@ -28,7 +28,7 @@ function App() {
     <>
 
     {!loadingFinished ? (
-        <Loading onLoadingFinish={() => setLoadingFinished(true)} />
+        <Loading onComplete={() => setLoadingFinished(true)} />
       ) : (
         <>
         <PageTransition>

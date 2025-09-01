@@ -3,7 +3,7 @@ import './LoadingScreen.css';
 
 const loadingNames = ["RARI", "EMURACS", "SITAN", "SANDAN", "BELLATTIX", "NOEL"];
 
-const Loading = ({ onLoadingFinish }) => {
+const Loading = ({ onComplete }) => {
   const [currentLoadName, setCurrentLoadName] = React.useState(0);
   const [shouldShow, setShouldShow] = React.useState(true);
 
@@ -14,7 +14,7 @@ const Loading = ({ onLoadingFinish }) => {
     if (sessionLoaded) {
       // Skip loading screen if already loaded session
       setShouldShow(false);
-      onLoadingFinish();
+      onComplete();
       return;
     }
 
@@ -26,14 +26,14 @@ const Loading = ({ onLoadingFinish }) => {
     const timer = setTimeout(() => {
       // Mark the site has been loaded in session
       sessionStorage.setItem('sessionLoaded', 'true');
-      onLoadingFinish();
+      onComplete();
     }, 3000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
     };
-  }, [onLoadingFinish]);
+  }, [onComplete]);
 
   // Don't render anything if we should skip the loading screen
   if (!shouldShow) {
