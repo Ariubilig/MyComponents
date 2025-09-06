@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
-import './FadeDown.css';
+import './FadeDownUpText.css';
 
-const FadeDown = ({ children, transitionImage }) => {
+const FadeDownUp = ({ children, transitionImage, routeNames }) => {
   const location = useLocation();
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
@@ -22,11 +22,11 @@ const FadeDown = ({ children, transitionImage }) => {
       // Transition out (fade down)
       const exitTimeline = gsap.timeline({
         onComplete: () => {
-          // CRITICAL: Update the displayed location ONLY after overlay fully covers
+          // Update the displayed location ONLY after overlay fully covers
           setDisplayLocation(location);
           
-          // Small delay to ensure content has updated
-          requestAnimationFrame(() => {
+          // Shorter delay since no text to read (reduced from 400ms to 200ms)
+          setTimeout(() => {
             // Transition in (fade up)
             const enterTimeline = gsap.timeline({
               onComplete: () => {
@@ -51,7 +51,7 @@ const FadeDown = ({ children, transitionImage }) => {
               opacity: 1,
               duration: 0.3
             }, "-=0.2");
-          });
+          }, 200); // Reduced delay since no text to display
         }
       });
       
@@ -61,7 +61,7 @@ const FadeDown = ({ children, transitionImage }) => {
         duration: 0.3
       });
       
-      // Animate overlay in (fade down) - make sure this completes before content update
+      // Animate overlay in (fade down)
       exitTimeline.to(overlayRef.current, {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         duration: 0.64,
@@ -88,7 +88,9 @@ const FadeDown = ({ children, transitionImage }) => {
         style={{
           backgroundImage: transitionImage ? `url(${transitionImage})` : 'none'
         }}
-      />
+      >
+        {/* Route text removed */}
+      </div>
       
       {/* Content wrapper */}
       <div 
@@ -108,4 +110,4 @@ const FadeDown = ({ children, transitionImage }) => {
   );
 };
 
-export default FadeDown;
+export default FadeDownUp;

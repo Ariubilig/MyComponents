@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
-import './FadeDown.css';
+import './FadeDownUpText.css';
 
-const FadeDown = ({ children, transitionImage, routeNames }) => {
+const FadeDownUpText = ({ children, transitionImage, routeNames }) => {
   const location = useLocation();
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
@@ -159,4 +159,4 @@ const FadeDown = ({ children, transitionImage, routeNames }) => {
   );
 };
 
-export default FadeDown;
+export default FadeDownUpText;
