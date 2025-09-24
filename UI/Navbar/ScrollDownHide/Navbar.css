@@ -1,0 +1,16 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 0.28s ease, opacity 0.2s ease;
+  transform: translateY(0);
+  will-change: transform;
+  z-index: 999;
+}
+
+.Navbar--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}

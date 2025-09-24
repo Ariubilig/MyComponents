@@ -14,9 +14,8 @@ function App() {
       <SplitTextUp 
         delay={1} 
         duration={1.5} 
-        stagger={0.15}
+        stagger={1.15}
         className="custom-text"
-        style={{ marginTop: '3rem' }}
       >
         <h3 style={{ color: '#ff6b6b', fontSize: '2rem' }}>
           This text has custom styling and slower animation
