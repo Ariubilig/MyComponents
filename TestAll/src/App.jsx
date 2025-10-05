@@ -11,6 +11,7 @@ import Slider from './Slides/Slider';
 import ScrollSlider from './Slider/ScrollSlider';
 import AboutPage from "./pages/about";
 import Overview from "./overview/Overview";
+import SpotlightGallery from "./SpotLight/SpotLight";
 
 import { useScrollSmoother } from './hooks/useScrollSmoother+load';
 import Marquee from './InfObjectMove/Marquee';
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/ScrollSlider" element={<ScrollSlider />} />
                 <Route path="/AboutPage" element={<AboutPage />} />
                 <Route path="/Overview" element={<Overview />} />
+                <Route path="/SpotlightGallery" element={<SpotlightGallery />} />
 
                 
               </Routes>
