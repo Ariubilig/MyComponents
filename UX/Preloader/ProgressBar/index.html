@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preloader</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  z-index: 9999;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+  </style>
+  <body>
+
+    <div class="preloader">
+      <div class="progress-bar"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ delay: 0.25 });
+
+        // Animate progress bar
+        tl.to(".progress-bar", {
+          scaleX: 1,
+          duration: 3, // left to right bar 3 sec 
+          ease: "power3.inOut",
+        })
+          .set(".progress-bar", { transformOrigin: "right" })
+          .to(".progress-bar", {
+            scaleX: 0,
+            duration: 1, // then, left to right bar 1 sec 
+            ease: "power3.in",
+          });
+
+        // Hide preloader, fade up
+        tl.to(".preloader", {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+          duration: 1.75,
+          ease: "power4.inOut",
+        });
+      });
+    </script>
+
+  </body>
+</html>

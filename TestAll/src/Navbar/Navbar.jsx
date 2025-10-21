@@ -14,6 +14,7 @@ function Navbar() {
             <Link  to="/ScrollSlider" >ScrollSlider</Link>
             <Link  to="/AboutPage" >About</Link>
             <Link  to="/Overview" >Overview</Link>
+            <Link  to="/SpotlightGallery" >SpotlightGallery</Link>
         </div>
 
         </>
