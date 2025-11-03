@@ -1,0 +1,38 @@
+
+* {
+  margin: 0;
+}
+body {
+  font-family: sans-serif;
+  background-color: #000000;
+}
+h1 {
+  font-weight: 500;
+}
+
+
+.clients-list {
+  mix-blend-mode: difference;
+}
+.client-name {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+.client-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.15rem;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease-out;
+}
+.client-name:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
