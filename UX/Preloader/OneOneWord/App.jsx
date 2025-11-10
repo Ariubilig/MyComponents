@@ -1,20 +1,21 @@
 import { useState } from "react";
-import Loading from './LoadingScreen/LoadingScreen.js';
+import Preloader from './Preloader/Preloader.jsx';
 
 
 function App() {
 
+  
   const [loadingFinished, setLoadingFinished] = useState(false);
 
   return (
     <>
 
       {!loadingFinished ? (
-        <Loading onComplete={() => setLoadingFinished(true)} />
+        <Preloader onComplete={() => setLoadingFinished(true)} />
       ) : (
         <>
           
-        <h1></h1>
+
 
         </>
       )}
