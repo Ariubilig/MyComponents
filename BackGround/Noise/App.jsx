@@ -3,7 +3,9 @@ import Noise from './components/Noise/Noise';
 
 function App() {
 
+
   const [loadingFinished, setLoadingFinished] = useState(false);
+
 
   return (
     <>
@@ -16,24 +18,25 @@ function App() {
     patternAlpha={15}
     />
 
-      {!loadingFinished ? (
-        <Preloader onComplete={() => setLoadingFinished(true)} />
-      ) : (
-      // <FadeDown>
-      <FadeDown transitionImage="/zero.png">
-        <Navbar /> 
+    {!loadingFinished ? (
+      <Preloader onComplete={() => setLoadingFinished(true)} />
+    ) : (
+    // <FadeDown>
+    <FadeDown transitionImage="/zero.png">
+      <Navbar /> 
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/AboutPage" element={<AboutPage />} />
-          <Route path="/ExampleMenu" element={<ExampleMenu />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/AboutPage" element={<AboutPage />} />
+        <Route path="/ExampleMenu" element={<ExampleMenu />} />
+      </Routes>
 
-      </FadeDown>
-      )}
+    </FadeDown>
+    )}
 
     </>
   );
 }
+
 
 export default App;

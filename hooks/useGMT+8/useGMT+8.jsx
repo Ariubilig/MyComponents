@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 
 export default function useGMTplus8() {
 
+
   const [currentTime, setCurrentTime] = useState("")
 
   useEffect(() => {
@@ -24,4 +25,6 @@ export default function useGMTplus8() {
   }, [])
 
   return currentTime
+
+  
 }

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
+
 export default function useTheme() {
+
+  
   const getSystemTheme = () => {
     if (typeof window !== 'undefined' && window.matchMedia) {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

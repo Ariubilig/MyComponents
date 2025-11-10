@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import './Noise.css';
 
+
 const Noise = ({
   patternSize = 250,
   patternScaleX = 1,
@@ -8,6 +9,8 @@ const Noise = ({
   patternRefreshInterval = 2,
   patternAlpha = 15
 }) => {
+
+
   const grainRef = useRef(null);
 
   useEffect(() => {
@@ -64,6 +67,9 @@ const Noise = ({
   }, [patternSize, patternScaleX, patternScaleY, patternRefreshInterval, patternAlpha]);
 
   return <canvas className="noise-overlay" ref={grainRef} style={{ imageRendering: 'pixelated' }} />;
+
+
 };
+
 
 export default Noise;
