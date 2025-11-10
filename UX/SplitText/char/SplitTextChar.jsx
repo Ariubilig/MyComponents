@@ -7,27 +7,27 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 /**
- * SplitTextUp - A reusable component that animates text by splitting it into lines
- * and animating each line from bottom to top
+ * SplitTextSplitTextChar - A reusable component that animates text by splitting it into characters
+ * and animating SplitTextChar character from bottom to top
  * 
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Text content to animate
  * @param {boolean} props.animateOnScroll - Whether to trigger animation on scroll (default: true)
  * @param {number} props.delay - Initial delay before animation starts (default: 0)
  * @param {number} props.duration - Animation duration in seconds (default: 1)
- * @param {number} props.stagger - Delay between each line animation (default: 0.1)
+ * @param {number} props.stagger - Delay between SplitTextChar character animation (default: 0.03)
  * @param {string} props.ease - GSAP easing function (default: "power4.out")
  * @param {string} props.scrollTriggerStart - Scroll trigger start position (default: "top 75%")
  * @param {string} props.className - Additional CSS classes
  * @param {Object} props.style - Additional inline styles
  * @param {string} props.wrapperTag - HTML tag for wrapper element (default: "div")
  */
-export default function SplitTextUp({ 
+export default function SplitTextChar({ 
   children, 
   animateOnScroll = true, 
   delay = 0,
   duration = 1,
-  stagger = 0.1,
+  stagger = 0.03,
   ease = "power4.out",
   scrollTriggerStart = "top 75%",
   className = "",
@@ -37,21 +37,21 @@ export default function SplitTextUp({
   const containerRef = useRef(null);
   const elementRefs = useRef([]);
   const splitRefs = useRef([]);
-  const lines = useRef([]);
+  const chars = useRef([]);
 
   useGSAP(
     () => {
       if (!containerRef.current) return;
 
       // Clean up previous splits
-      splitRefs.current.forEach((split) => {
+      splitRefs.current.forSplitTextChar((split) => {
         if (split) {
           split.revert();
         }
       });
 
       splitRefs.current = [];
-      lines.current = [];
+      chars.current = [];
       elementRefs.current = [];
 
       let elements = [];
@@ -61,40 +61,27 @@ export default function SplitTextUp({
         elements = [containerRef.current];
       }
 
-      elements.forEach((element) => {
+      elements.forSplitTextChar((element) => {
         elementRefs.current.push(element);
 
         try {
           const split = SplitText.create(element, {
-            type: "lines",
-            mask: "lines",
-            linesClass: "line++",
-            lineThreshold: 0.1,
+            type: "chars",
+            mask: "chars",
+            charsClass: "char++",
           });
 
           splitRefs.current.push(split);
-
-          // Handle text-indent CSS property
-          const computedStyle = window.getComputedStyle(element);
-          const textIndent = computedStyle.textIndent;
-
-          if (textIndent && textIndent !== "0px") {
-            if (split.lines.length > 0) {
-              split.lines[0].style.paddingLeft = textIndent;
-            }
-            element.style.textIndent = "0";
-          }
-
-          lines.current.push(...split.lines);
+          chars.current.push(...split.chars);
         } catch (error) {
-          console.warn("SplitTextUp: Failed to split element", error);
+          console.warn("SplitTextSplitTextChar: Failed to split element", error);
         }
       });
 
-      if (lines.current.length === 0) return;
+      if (chars.current.length === 0) return;
 
       // Set initial position
-      gsap.set(lines.current, { y: "100%" });
+      gsap.set(chars.current, { y: "100%" });
 
       const animationProps = {
         y: "0%",
@@ -105,7 +92,7 @@ export default function SplitTextUp({
       };
 
       if (animateOnScroll) {
-        gsap.to(lines.current, {
+        gsap.to(chars.current, {
           ...animationProps,
           scrollTrigger: {
             trigger: containerRef.current,
@@ -114,11 +101,11 @@ export default function SplitTextUp({
           },
         });
       } else {
-        gsap.to(lines.current, animationProps);
+        gsap.to(chars.current, animationProps);
       }
 
       return () => {
-        splitRefs.current.forEach((split) => {
+        splitRefs.current.forSplitTextChar((split) => {
           if (split) {
             split.revert();
           }

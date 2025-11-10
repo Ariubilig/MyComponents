@@ -1,17 +1,17 @@
-import SplitTextUp from './SplitTextUp';
+import SplitTextLines from './SplitTextLines';
 
 function App() {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-      <h1>SplitTextUp Examples</h1>
+      <h1>SplitTextLines Examples</h1>
       
       {/* Basic usage */}
-      <SplitTextUp delay={0.5}>
+      <SplitTextLines delay={0.5}>
         <h2>We craft identities and experiences for the bold.</h2>
-      </SplitTextUp>
+      </SplitTextLines>
 
       {/* Custom styling and animation */}
-      <SplitTextUp 
+      <SplitTextLines 
         delay={1} 
         duration={1.5} 
         stagger={1.15}
@@ -20,10 +20,10 @@ function App() {
         <h3 style={{ color: '#ff6b6b', fontSize: '2rem' }}>
           This text has custom styling and slower animation
         </h3>
-      </SplitTextUp>
+      </SplitTextLines>
 
       {/* Multiple elements */}
-      <SplitTextUp 
+      <SplitTextLines 
         delay={1.5} 
         stagger={0.2}
         style={{ marginTop: '3rem' }}
@@ -31,16 +31,16 @@ function App() {
         <p>First paragraph with line-by-line animation</p>
         <p>Second paragraph with line-by-line animation</p>
         <p>Third paragraph with line-by-line animation</p>
-      </SplitTextUp>
+      </SplitTextLines>
 
       {/* Without scroll trigger */}
-      <SplitTextUp 
+      <SplitTextLines 
         animateOnScroll={false} 
         delay={2}
         style={{ marginTop: '3rem' }}
       >
         <h4>This animates immediately without scroll trigger</h4>
-      </SplitTextUp>
+      </SplitTextLines>
     </div>
   );
 }

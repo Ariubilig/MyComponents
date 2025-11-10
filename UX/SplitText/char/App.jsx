@@ -1,17 +1,17 @@
-import SplitTextEach from './SplitTextEach';
+import SplitTextChar from './SplitTextChar';
 
 function App() {
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
-      <h1>SplitTextEach Examples</h1>
+      <h1>SplitTextChar Examples</h1>
       
       {/* Basic usage */}
-      <SplitTextEach delay={0.5}>
+      <SplitTextChar delay={0.5}>
         <h2>Timeless Form</h2>
-      </SplitTextEach>
+      </SplitTextChar>
 
       {/* Custom styling and animation */}
-      <SplitTextEach 
+      <SplitTextChar 
         delay={1} 
         duration={1.5} 
         stagger={0.05}
@@ -21,10 +21,10 @@ function App() {
         <h3 style={{ color: '#4ecdc4', fontSize: '2rem' }}>
           Character by character animation
         </h3>
-      </SplitTextEach>
+      </SplitTextChar>
 
       {/* Multiple elements */}
-      <SplitTextEach 
+      <SplitTextChar 
         delay={1.5} 
         stagger={0.02}
         style={{ marginTop: '3rem' }}
@@ -32,26 +32,26 @@ function App() {
         <p>First paragraph with character animation</p>
         <p>Second paragraph with character animation</p>
         <p>Third paragraph with character animation</p>
-      </SplitTextEach>
+      </SplitTextChar>
 
       {/* Without scroll trigger */}
-      <SplitTextEach 
+      <SplitTextChar 
         animateOnScroll={false} 
         delay={2}
         style={{ marginTop: '3rem' }}
       >
         <h4>This animates immediately without scroll trigger</h4>
-      </SplitTextEach>
+      </SplitTextChar>
 
       {/* Custom wrapper tag */}
-      <SplitTextEach 
+      <SplitTextChar 
         delay={2.5}
         wrapperTag="section"
         className="custom-section"
         style={{ marginTop: '3rem', border: '1px solid #ddd', padding: '1rem' }}
       >
         <h5>Using a section wrapper instead of div</h5>
-      </SplitTextEach>
+      </SplitTextChar>
     </div>
   );
 }
