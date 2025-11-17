@@ -2,120 +2,115 @@ import './Preloader.css'
 import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
+import { useFontsReady } from '../hooks/useFontsReady'; // ⬅ ADD THIS
 
 
 export default function Preloader({ onFinish }) {
 
+
   const [shouldShow, setShouldShow] = useState(true);
+  const fontsReady = useFontsReady(); // ⬅ FONTS HOOK
 
   // EARLY EXIT — do NOT render preloader DOM
-  // This prevents unnecessary paints + effects.
   if (!shouldShow) return null;
 
-useEffect(() => {
+  useEffect(() => {
+    // WAIT for fonts BEFORE doing ANYTHING
+    if (!fontsReady) return;
 
-  const sessionLoaded = sessionStorage.getItem('sessionLoaded');
+    const sessionLoaded = sessionStorage.getItem('sessionLoaded');
 
-  if (sessionLoaded) {
-    setShouldShow(false);
-    onFinish?.();
-    return;
-  }
+    if (sessionLoaded) {
+      setShouldShow(false);
+      onFinish?.();
+      return;
+    }
 
-  gsap.registerPlugin(SplitText);
+    gsap.registerPlugin(SplitText);
 
-  let tl; // <-- so cleanup can kill it later
+    let tl;
 
-  const splitTextIntoLines = (selector, options = {}) => {
-    const defaults = {
-      type: 'lines',
-      mask: 'lines',
-      linesClass: 'line',
-      ...options,
+    const splitTextIntoLines = (selector, options = {}) => {
+      const defaults = {
+        type: 'lines',
+        mask: 'lines',
+        linesClass: 'line',
+        ...options,
+      };
+      return SplitText.create(selector, defaults);
     };
 
-    return SplitText.create(selector, defaults);
-  };
+    // Counter animation (unchanged)
+    const animateCounter = (selector, duration = 4.5, delay = 0) => {
+      const counterElement = document.querySelector(selector);
+      let currentValue = 0;
+      const updateInterval = 200;
+      const maxDuration = duration * 1000;
+      const startTime = Date.now();
 
-  // Counter animation stays the same
-  const animateCounter = (selector, duration = 4.5, delay = 0) => {
-    const counterElement = document.querySelector(selector);
-    let currentValue = 0;
-    const updateInterval = 200;
-    const maxDuration = duration * 1000;
-    const startTime = Date.now();
+      setTimeout(() => {
+        const updateCounter = () => {
+          const elapsedTime = Date.now() - startTime;
+          const progress = elapsedTime / maxDuration;
 
-    setTimeout(() => {
-      const updateCounter = () => {
-        const elapsedTime = Date.now() - startTime;
-        const progress = elapsedTime / maxDuration;
+          if (currentValue < 100 && elapsedTime < maxDuration) {
+            const target = Math.floor(progress * 100);
+            const jump = Math.floor(Math.random() * 25) + 5;
+            currentValue = Math.min(currentValue + jump, target, 100);
 
-        if (currentValue < 100 && elapsedTime < maxDuration) {
-          const target = Math.floor(progress * 100);
-          const jump = Math.floor(Math.random() * 25) + 5;
-          currentValue = Math.min(currentValue + jump, target, 100);
+            counterElement.textContent = currentValue
+              .toString()
+              .padStart(2, '0');
 
-          counterElement.textContent = currentValue
-            .toString()
-            .padStart(2, '0');
+            setTimeout(updateCounter, updateInterval + Math.random() * 100);
+          } else {
+            counterElement.textContent = '100';
+          }
+        };
 
-          setTimeout(updateCounter, updateInterval + Math.random() * 100);
-        } else {
-          counterElement.textContent = '100';
-        }
-      };
+        updateCounter();
+      }, delay * 1000);
+    };
 
-      updateCounter();
-    }, delay * 1000);
-  };
+    animateCounter('.preloader-counter p', 4.5, 2);
 
-  animateCounter('.preloader-counter p', 4.5, 2);
+    // --- SplitText + GSAP animation ---
+    const runSplitAndAnimation = () => {
+      splitTextIntoLines('.preloader-copy p');
+      splitTextIntoLines('.preloader-counter p');
 
-
-  // --- Run Split + GSAP animation ---
-  const runSplitAndAnimation = () => {
-    splitTextIntoLines('.preloader-copy p');
-    splitTextIntoLines('.preloader-counter p');
-
-    tl = gsap.timeline({
-      onComplete: () => {
-        sessionStorage.setItem('sessionLoaded', 'true');
-        setShouldShow(false);
-        onFinish?.();
-      },
-    });
-
-    tl.to(['.preloader-copy p .line', '.preloader-counter p .line'], {
-      y: '0%',
-      duration: 1,
-      stagger: 0.075,
-      ease: 'power3.out',
-      delay: 1,
-    })
-      .to('.preloader', {
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-        duration: 1.25,
-        ease: 'power3.out',
-        delay: 3.5,
+      tl = gsap.timeline({
+        onComplete: () => {
+          sessionStorage.setItem('sessionLoaded', 'true');
+          setShouldShow(false);
+          onFinish?.();
+        },
       });
-  };
 
+      tl.to(['.preloader-copy p .line', '.preloader-counter p .line'], {
+        y: '0%',
+        duration: 1,
+        stagger: 0.075,
+        ease: 'power3.out',
+        delay: 1,
+      })
+        .to('.preloader', {
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+          duration: 1.25,
+          ease: 'power3.out',
+          delay: 3.5,
+        });
+    };
 
-  // --- Version 2's font loading logic (kept exactly) ---
-  if (document.fonts.status === 'loaded') {
+    // Run animation (fonts already ready)
     runSplitAndAnimation();
-  } else {
-    document.fonts.ready.then(runSplitAndAnimation);
-  }
 
-  
-  // --- GSAP CLEANUP (from Version 2) ---
-  return () => {
-    tl?.kill();
-  };
+    return () => {
+      tl?.kill();
+    };
 
-}, [onFinish]);
-  
+  }, [onFinish, fontsReady]); // ⬅ ✔ ADD fontsReady dependency
+
 
   return (
     <>
@@ -143,4 +138,5 @@ useEffect(() => {
 
     </>
   );
+  
 }
