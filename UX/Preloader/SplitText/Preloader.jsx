@@ -2,7 +2,7 @@ import './Preloader.css'
 import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import { useFontsReady } from '../hooks/useFontsReady'; // ⬅ ADD THIS
+import { useFontsReady } from '../../hooks/useFontsReady';
 
 
 export default function Preloader({ onFinish }) {
