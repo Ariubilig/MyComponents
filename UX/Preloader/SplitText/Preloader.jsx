@@ -12,98 +12,110 @@ export default function Preloader({ onFinish }) {
   // This prevents unnecessary paints + effects.
   if (!shouldShow) return null;
 
-  useEffect(() => {
-    // ---- SESSION CHECK ----
-    const sessionLoaded = sessionStorage.getItem('sessionLoaded');
+useEffect(() => {
 
-    if (sessionLoaded) {
-      setShouldShow(false);
-      onFinish?.();
-      return;
-    }
+  const sessionLoaded = sessionStorage.getItem('sessionLoaded');
 
-    // ---- START NORMAL PRELOADER ----
-    gsap.registerPlugin(SplitText);
+  if (sessionLoaded) {
+    setShouldShow(false);
+    onFinish?.();
+    return;
+  }
 
-    const splitTextIntoLines = (selector, options = {}) => {
-      const defaults = {
-        type: 'lines',
-        mask: 'lines',
-        linesClass: 'line',
-        ...options,
+  gsap.registerPlugin(SplitText);
+
+  let tl; // <-- so cleanup can kill it later
+
+  const splitTextIntoLines = (selector, options = {}) => {
+    const defaults = {
+      type: 'lines',
+      mask: 'lines',
+      linesClass: 'line',
+      ...options,
+    };
+
+    return SplitText.create(selector, defaults);
+  };
+
+  // Counter animation stays the same
+  const animateCounter = (selector, duration = 4.5, delay = 0) => {
+    const counterElement = document.querySelector(selector);
+    let currentValue = 0;
+    const updateInterval = 200;
+    const maxDuration = duration * 1000;
+    const startTime = Date.now();
+
+    setTimeout(() => {
+      const updateCounter = () => {
+        const elapsedTime = Date.now() - startTime;
+        const progress = elapsedTime / maxDuration;
+
+        if (currentValue < 100 && elapsedTime < maxDuration) {
+          const target = Math.floor(progress * 100);
+          const jump = Math.floor(Math.random() * 25) + 5;
+          currentValue = Math.min(currentValue + jump, target, 100);
+
+          counterElement.textContent = currentValue
+            .toString()
+            .padStart(2, '0');
+
+          setTimeout(updateCounter, updateInterval + Math.random() * 100);
+        } else {
+          counterElement.textContent = '100';
+        }
       };
 
-      return SplitText.create(selector, defaults);
-    };
+      updateCounter();
+    }, delay * 1000);
+  };
 
-    // Counter animation
-    const animateCounter = (selector, duration = 3, delay = 0) => {
-      const counterElement = document.querySelector(selector);
-      let currentValue = 0;
-      const updateInterval = 200;
-      const maxDuration = duration * 1000;
-      const startTime = Date.now();
+  animateCounter('.preloader-counter p', 4.5, 2);
 
-      setTimeout(() => {
-        const updateCounter = () => {
-          const elapsedTime = Date.now() - startTime;
-          const progress = elapsedTime / maxDuration;
 
-          if (currentValue < 100 && elapsedTime < maxDuration) {
-            const target = Math.floor(progress * 100);
-            const jump = Math.floor(Math.random() * 25) + 5;
-            currentValue = Math.min(currentValue + jump, target, 100);
+  // --- Run Split + GSAP animation ---
+  const runSplitAndAnimation = () => {
+    splitTextIntoLines('.preloader-copy p');
+    splitTextIntoLines('.preloader-counter p');
 
-            counterElement.textContent = currentValue
-              .toString()
-              .padStart(2, '0');
+    tl = gsap.timeline({
+      onComplete: () => {
+        sessionStorage.setItem('sessionLoaded', 'true');
+        setShouldShow(false);
+        onFinish?.();
+      },
+    });
 
-            setTimeout(updateCounter, updateInterval + Math.random() * 100);
-          } else {
-            counterElement.textContent = '100';
-          }
-        };
-
-        updateCounter();
-      }, delay * 1000);
-    };
-
-    animateCounter('.preloader-counter p', 4.5, 2);
-
-    const runSplitAndAnimation = () => {
-      splitTextIntoLines('.preloader-copy p');
-      splitTextIntoLines('.preloader-counter p');
-
-      const tl = gsap.timeline({
-        onComplete: () => {
-          sessionStorage.setItem('sessionLoaded', 'true');
-          setShouldShow(false);
-          onFinish?.();
-        },
-      });
-
-      tl.to(['.preloader-copy p .line', '.preloader-counter p .line'], {
-        y: '0%',
-        duration: 1,
-        stagger: 0.075,
-        ease: 'power3.out',
-        delay: 1,
-      }).to('.preloader', {
+    tl.to(['.preloader-copy p .line', '.preloader-counter p .line'], {
+      y: '0%',
+      duration: 1,
+      stagger: 0.075,
+      ease: 'power3.out',
+      delay: 1,
+    })
+      .to('.preloader', {
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
         duration: 1.25,
         ease: 'power3.out',
         delay: 3.5,
       });
-    };
+  };
 
-    // Ensure fonts loaded
-    if (document.fonts.status === 'loaded') {
-      runSplitAndAnimation();
-    } else {
-      document.fonts.ready.then(runSplitAndAnimation);
-    }
-  }, [onFinish]);
 
+  // --- Version 2's font loading logic (kept exactly) ---
+  if (document.fonts.status === 'loaded') {
+    runSplitAndAnimation();
+  } else {
+    document.fonts.ready.then(runSplitAndAnimation);
+  }
+
+  
+  // --- GSAP CLEANUP (from Version 2) ---
+  return () => {
+    tl?.kill();
+  };
+
+}, [onFinish]);
+  
 
   return (
     <>

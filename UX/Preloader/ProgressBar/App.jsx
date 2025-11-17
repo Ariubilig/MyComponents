@@ -8,19 +8,19 @@ function App() {
 
 
   return (
-    <div>
+    <>
 
-      {!loadingFinished ? (
-        <Preloader onFinish={() => setLoadingFinished(true)} />
-      ) : (
+    {!loadingFinished ? (
+      <Preloader onFinish={() => setLoadingFinished(true)} />
+    ) : (
+      <>
 
-        <main className="hero">
-          aaaaaaaaaaa
-        </main>
-        
-      )}
 
-    </div>
+      
+      </>
+    )}
+
+    </>
   );
 };
 

@@ -10,15 +10,15 @@ function App() {
   return (
     <>
 
-      {!loadingFinished ? (
-        <Preloader onComplete={() => setLoadingFinished(true)} />
-      ) : (
-        <>
-          
+    {!loadingFinished ? (
+      <Preloader onComplete={() => setLoadingFinished(true)} />
+    ) : (
+      <>
+        
 
 
-        </>
-      )}
+      </>
+    )}
 
     </>
   );
