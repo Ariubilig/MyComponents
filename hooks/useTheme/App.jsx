@@ -1,18 +1,23 @@
-import useTheme from "./hook/useTheme";
+import './App.css'
+import useTheme from './hooks/useTheme/useTheme';
 
-  function App(){
 
-    const { theme, toggleTheme } = useTheme();
+function App() {
 
-    return (
-      <>
-      
-      <button onClick={toggleTheme}>
-        {theme === "light"} Toggle Theme
-      </button>
 
-      </>
-    );
-  }
+  const { theme, toggle } = useTheme();
+
+
+  return (
+    <>
+
+    <button onClick={toggle}>
+      Toggle Theme
+    </button>
+
+    </>
+  )
+}
+
 
 export default App

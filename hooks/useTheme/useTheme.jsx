@@ -4,44 +4,49 @@ import { useEffect, useState } from "react";
 export default function useTheme() {
 
   
-  const getSystemTheme = () => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return 'light';
-  };
+  const getSystem = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
 
   const [theme, setTheme] = useState(() => {
-
-    // Check localStorage first, then system theme
-    if (typeof window === 'undefined') return 'dark';
-    return localStorage.getItem("theme") || getSystemTheme();
-
+    if (typeof window === "undefined") return "system";
+    return localStorage.getItem("theme") || "system";
   });
 
-  // system theme changes and update accordingly
+  // Apply theme whenever it changes
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const handleSystemThemeChange = (e) => {
-      // match system theme
-      setTheme(e.matches ? 'dark' : 'light');
-    };
+    const applied =
+      theme === "system" ? getSystem() : theme;
 
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", applied);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  // System theme auto-sync when theme="system"
+  useEffect(() => {
+    if (theme !== "system") return;
+
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const update = () => {
+      document.documentElement.setAttribute(
+        "data-theme",
+        mq.matches ? "dark" : "light"
+      );
+    };
+
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [theme]);
+
+  return {
+    theme,
+    setTheme, // you can call setTheme("light" | "dark" | "system")
+    toggle: () =>
+      setTheme((t) => (t === "dark" ? "light" : "dark")),
   };
 
-  return { theme, toggleTheme };
 }
