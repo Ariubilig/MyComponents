@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
+
 export function useFontsReady() {
+
   const [fontsReady, setFontsReady] = useState(false);
 
   useEffect(() => {
@@ -17,4 +19,5 @@ export function useFontsReady() {
   }, []);
 
   return fontsReady;
+  
 }
