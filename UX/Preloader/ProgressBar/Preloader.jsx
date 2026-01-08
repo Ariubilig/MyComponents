@@ -4,6 +4,8 @@ import "./Preloader.css"
 
 
 const Preloader = ({ onFinish }) => {
+
+
   const [shouldShow, setShouldShow] = useState(true);
 
   useEffect(() => {
@@ -61,6 +63,9 @@ const Preloader = ({ onFinish }) => {
       <div className="progress-bar"></div>
     </div>
   );
+
+  
 };
+
 
 export default Preloader

@@ -3,7 +3,7 @@ import './Preloader.css';
 
 const PreloaderNames = ["RARI", "EMURACS", "SITAN", "SANDAN", "BELLATTIX", "NOEL"];
 
-const Preloader = ({ onComplete }) => {
+const Preloader = ({ onFinish }) => {
   const [currentLoadName, setCurrentLoadName] = React.useState(0);
   const [shouldShow, setShouldShow] = React.useState(true);
 
@@ -14,7 +14,7 @@ const Preloader = ({ onComplete }) => {
     if (sessionLoaded) {
       // Skip Preloader screen if already loaded session
       setShouldShow(false);
-      onComplete();
+      onFinish();
       return;
     }
 
@@ -26,14 +26,14 @@ const Preloader = ({ onComplete }) => {
     const timer = setTimeout(() => {
       // Mark the site has been loaded in session
       sessionStorage.setItem('sessionLoaded', 'true');
-      onComplete();
+      onFinish();
     }, 3000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
     };
-  }, [onComplete]);
+  }, [onFinish]);
 
   // Don't render anything if we should skip the Preloader screen
   if (!shouldShow) {

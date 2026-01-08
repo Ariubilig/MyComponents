@@ -11,9 +11,7 @@ export default function Preloader({ onFinish }) {
   const [shouldShow, setShouldShow] = useState(true);
   const fontsReady = useFontsReady(); // ⬅ FONTS HOOK
 
-  // EARLY EXIT — do NOT render preloader DOM
-  if (!shouldShow) return null;
-
+  // Keep hooks above any early return
   useEffect(() => {
     // WAIT for fonts BEFORE doing ANYTHING
     if (!fontsReady) return;
@@ -112,6 +110,9 @@ export default function Preloader({ onFinish }) {
   }, [onFinish, fontsReady]); // ⬅ ✔ ADD fontsReady dependency
 
 
+  // EARLY EXIT — do NOT render preloader DOM (after hooks)
+  if (!shouldShow) return null;
+
   return (
     <>
 
@@ -138,5 +139,6 @@ export default function Preloader({ onFinish }) {
 
     </>
   );
+  
   
 }
