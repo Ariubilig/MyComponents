@@ -6,10 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 
-export const useScrollSmoother = (wrapperRef, loadingFinished) => {
+export const useScrollSmoother = (wrapperRef, PreloaderDone) => {
 
   useEffect(() => {
-    if (!loadingFinished || !wrapperRef.current) return;
+    if (!PreloaderDone || !wrapperRef.current) return;
     if (typeof window === "undefined") return;
 
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -30,10 +30,11 @@ export const useScrollSmoother = (wrapperRef, loadingFinished) => {
     });
 
     ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-
+    ScrollTrigger.refresh(); // GSAP doesn't always refresh properly when DOM changes
+    
     return () => {
       smoother.kill();
     };
-  }, [wrapperRef, loadingFinished]);
+  }, [wrapperRef, PreloaderDone]);
 
 };

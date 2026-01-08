@@ -6,16 +6,19 @@ import Preloader from "./components/ux/preloader/Preloader";
 function App() {
 
 
-  const [loadingFinished, setLoadingFinished] = useState(false);
+  const [preloaderDone, setPreloaderDone] = useState(false);
   const wrapperRef = useRef(null);
-  useScrollSmoother(wrapperRef, loadingFinished);
+  useScrollSmoother(wrapperRef, preloaderDone);
 
   
   return (
     <>
-      {!loadingFinished ? (
-        <Preloader onFinish={() => setLoadingFinished(true)} />
+
+
+      {!preloaderDone ? (
+        <Preloader onFinish={() => setPreloaderDone(true)} />
       ) : (
+
         <div id="smooth-wrapper" ref={wrapperRef}>
           <div id="smooth-content">
 
@@ -23,7 +26,10 @@ function App() {
 
           </div>
         </div>
+        
       )}
+
+
     </>
   );
 }
