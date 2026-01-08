@@ -11,7 +11,7 @@ function App() {
     <>
 
     {!loadingFinished ? (
-      <Preloader onComplete={() => setLoadingFinished(true)} />
+      <Preloader onFinish={() => setLoadingFinished(true)} />
     ) : (
       <>
         

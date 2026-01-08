@@ -3,12 +3,11 @@
 ## Must have Session-based skip
 ###### Users dont wanna see same Animation every refresh the page
 ```
+const sessionLoaded = sessionStorage.getItem(sessionKey);
 if (sessionLoaded) {
   setShouldShow(false);
-  if (onFinish) onFinish();
   return;
 }
-const sessionLoaded = sessionStorage.getItem('sessionLoaded');
 ```
 
 ## After animation Cleanup
@@ -23,12 +22,22 @@ const sessionLoaded = sessionStorage.getItem('sessionLoaded');
 
 ## setTimeout (If animation freezes user still enters site)
 ```
-setTimeout(() => forceFinish(), MAX_TIME);
+hardFailRef.current = setTimeout(() => {
+  if (!finishedRef.current) forceFinish();
+}, duration);
+```
+
+## Minimum display time
+###### prevents page loaded 500ms but Animation still animating ts instanly force finish
+```
+
 ```
 
 ## prefers-reduced-motion: reduce
 ###### idk why peaple enable this settings
 ###### Accessibility & OS-level user preference
 ```
-window.matchMedia('(prefers-reduced-motion: reduce)')
+const prefersReducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+).matches;
 ```
