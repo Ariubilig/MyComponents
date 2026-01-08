@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useScrollSmoother } from "./components/hooks/useScrollSmoother";
+import { useScrollSmootherLoad } from "./components/hooks/useScrollSmootherLoad.jsx";
 import Preloader from "./components/ux/preloader/Preloader";
 
 
@@ -8,7 +8,7 @@ function App() {
 
   const [preloaderDone, setPreloaderDone] = useState(false);
   const wrapperRef = useRef(null);
-  useScrollSmoother(wrapperRef, preloaderDone);
+  useScrollSmootherLoad(wrapperRef, preloaderDone);
 
   
   return (

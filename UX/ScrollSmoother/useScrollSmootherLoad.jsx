@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 
-export const useScrollSmoother = (wrapperRef, PreloaderDone) => {
+export const useScrollSmootherLoad = (wrapperRef, PreloaderDone) => {
 
   useEffect(() => {
     if (!PreloaderDone || !wrapperRef.current) return;
