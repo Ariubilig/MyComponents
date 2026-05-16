@@ -5,17 +5,17 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother); // Register once at module level
 
-export const useScrollSmoother = (wrapperRef) => {
+export const useScrollSmoother = (wrapperRef, { enabled = true } = {}) => {
 
   useEffect(() => {
-    if (!wrapperRef.current) return;
+    if (!enabled || !wrapperRef.current) return;
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-    ScrollSmoother.get()?.kill(); // Kill any existing smoother StrictMode/route changes
+    ScrollSmoother.get()?.kill(); // Kill any existing smoother (StrictMode / route changes)
 
     if (ScrollTrigger.isTouch === 1) return; // Disable on touch devices
+
     const content = wrapperRef.current.querySelector("#smooth-content");
     if (!content) return;
 
@@ -29,10 +29,11 @@ export const useScrollSmoother = (wrapperRef) => {
     });
 
     ScrollTrigger.normalizeScroll({ allowNestedScroll: true }); // Allow nested scrolling (modals, dropdowns, etc.)
+    ScrollTrigger.refresh(); // Ensure layout is correct after any DOM changes
 
     return () => {
       smoother.kill();
     };
-  }, []);
+  }, [enabled]); // wrapperRef is a stable ref — no need to include it
 
 };
