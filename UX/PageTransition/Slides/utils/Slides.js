@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.set(initialSlide.querySelector(".slide-img img"), { y: "0%" });
 
   initMarqueeAnimation(initialSlide.querySelector(".marquee-container h1"));
-  
+
   // Build progress bars to match slides length and initialize counter
   function syncProgressBarsWithSlides() {
     const progressRoot = document.querySelector(".carousel-progress");
@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initMarqueeAnimation(h1Element) {
-    const baseText = h1Element.getAttribute("data-text") || h1Element.textContent.trim();
+    const baseText =
+      h1Element.getAttribute("data-text") || h1Element.textContent.trim();
     h1Element.setAttribute("data-text", baseText);
     h1Element.innerHTML = `<span class="marquee-unit">${baseText}</span><span class="marquee-unit">${baseText}</span>`;
 
@@ -280,7 +281,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const isScrollingForward = progress > previousProgress;
       const maxIndex = slides.length - 1;
-      const targetSlideIndex = Math.min(Math.floor(progress * slides.length), maxIndex);
+      const targetSlideIndex = Math.min(
+        Math.floor(progress * slides.length),
+        maxIndex,
+      );
 
       updateSlideCounter();
 

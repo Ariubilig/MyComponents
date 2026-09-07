@@ -43,19 +43,19 @@ By default it splits the text into **lines**, masks them, and reveals each line 
 
 ## Props
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `children` | `ReactNode` | required | Text content to animate. Can be a single element or multiple children. |
-| `type` | `"lines" \| "chars"` | `"lines"` | Whether to split by lines or characters. |
-| `animateOnScroll` | `boolean` | `true` | If `true`, animates when scrolled into view. If `false`, animates immediately on mount. |
-| `delay` | `number` | `0` | Initial delay in seconds before animation starts. |
-| `duration` | `number` | `1` | Duration of each piece's animation in seconds. |
-| `stagger` | `number` | `0.1` for lines, `0.03` for chars | Delay between each piece. If you don't pass a value, a sensible default based on `type` is used. |
-| `ease` | `string` | `"power4.out"` | Any [GSAP easing string](https://gsap.com/docs/v3/Eases/). |
-| `scrollTriggerStart` | `string` | `"top 75%"` | ScrollTrigger `start` position. See [Footers section](#footers-and-elements-near-the-bottom). |
-| `className` | `string` | `""` | Extra CSS classes applied to the wrapping element. |
-| `style` | `object` | `{}` | Extra inline styles applied to the wrapping element. |
-| `wrapperTag` | `string` | `"div"` | Tag name used when multiple children are passed (single children are cloned directly, no wrapper). |
+| Prop                 | Type                 | Default                           | Description                                                                                        |
+| -------------------- | -------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `children`           | `ReactNode`          | required                          | Text content to animate. Can be a single element or multiple children.                             |
+| `type`               | `"lines" \| "chars"` | `"lines"`                         | Whether to split by lines or characters.                                                           |
+| `animateOnScroll`    | `boolean`            | `true`                            | If `true`, animates when scrolled into view. If `false`, animates immediately on mount.            |
+| `delay`              | `number`             | `0`                               | Initial delay in seconds before animation starts.                                                  |
+| `duration`           | `number`             | `1`                               | Duration of each piece's animation in seconds.                                                     |
+| `stagger`            | `number`             | `0.1` for lines, `0.03` for chars | Delay between each piece. If you don't pass a value, a sensible default based on `type` is used.   |
+| `ease`               | `string`             | `"power4.out"`                    | Any [GSAP easing string](https://gsap.com/docs/v3/Eases/).                                         |
+| `scrollTriggerStart` | `string`             | `"top 75%"`                       | ScrollTrigger `start` position. See [Footers section](#footers-and-elements-near-the-bottom).      |
+| `className`          | `string`             | `""`                              | Extra CSS classes applied to the wrapping element.                                                 |
+| `style`              | `object`             | `{}`                              | Extra inline styles applied to the wrapping element.                                               |
+| `wrapperTag`         | `string`             | `"div"`                           | Tag name used when multiple children are passed (single children are cloned directly, no wrapper). |
 
 ---
 
@@ -65,7 +65,9 @@ By default it splits the text into **lines**, masks them, and reveals each line 
 
 ```jsx
 <SplitTextReveal>
-  <p>Long paragraph text that will be split into lines and revealed line by line.</p>
+  <p>
+    Long paragraph text that will be split into lines and revealed line by line.
+  </p>
 </SplitTextReveal>
 ```
 
@@ -144,12 +146,12 @@ The default `scrollTriggerStart` is `"top 75%"`, which means **"fire when the to
 
 Quick reference:
 
-| Start value | Fires when… |
-|---|---|
+| Start value                   | Fires when…                                             |
+| ----------------------------- | ------------------------------------------------------- |
 | `"top bottom"` / `"top 100%"` | top of element enters the viewport — safest for footers |
-| `"top 90%"` | top is 10% inside viewport — gentle |
-| `"top 75%"` (default) | top is 25% inside viewport — good for mid-page |
-| `"top center"` / `"top 50%"` | top reaches middle — dramatic |
+| `"top 90%"`                   | top is 10% inside viewport — gentle                     |
+| `"top 75%"` (default)         | top is 25% inside viewport — good for mid-page          |
+| `"top center"` / `"top 50%"`  | top reaches middle — dramatic                           |
 
 ---
 
@@ -169,8 +171,12 @@ SplitText creates the mask wrappers automatically (`mask: "lines"` / `mask: "cha
 Example:
 
 ```css
-.line1 { color: red; }
-.char3 { font-weight: bold; }
+.line1 {
+  color: red;
+}
+.char3 {
+  font-weight: bold;
+}
 ```
 
 ### Fonts

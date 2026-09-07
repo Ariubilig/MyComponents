@@ -45,22 +45,22 @@ export default function BlockPageTransition({
 
   // Styles as objects
   const overlayStyle = {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100vw',
-    height: '100svh',
-    display: 'flex',
-    pointerEvents: 'none',
+    width: "100vw",
+    height: "100svh",
+    display: "flex",
+    pointerEvents: "none",
     zIndex: 9999,
   };
 
   const blockStyle = {
     flex: 1,
-    height: '100%',
+    height: "100%",
     background: overlayColor,
-    transform: 'scaleX(0)',
-    transformOrigin: 'left',
+    transform: "scaleX(0)",
+    transformOrigin: "left",
   };
 
   const handleRouteChange = useCallback(
@@ -71,7 +71,7 @@ export default function BlockPageTransition({
       coverPage(url);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   const onAnchorClick = useCallback(
@@ -101,7 +101,7 @@ export default function BlockPageTransition({
         handleRouteChange(url);
       }
     },
-    [pathname, handleRouteChange, interceptLinks]
+    [pathname, handleRouteChange, interceptLinks],
   );
 
   const revealPage = useCallback(() => {
@@ -135,7 +135,8 @@ export default function BlockPageTransition({
             transformOrigin: "right",
             onComplete: () => {
               isTransitioning.current = false;
-              if (overlayRef.current) overlayRef.current.style.pointerEvents = "none";
+              if (overlayRef.current)
+                overlayRef.current.style.pointerEvents = "none";
               if (onTransitionEnd) onTransitionEnd();
             },
           });
@@ -162,14 +163,23 @@ export default function BlockPageTransition({
     createBlocks();
     gsap.set(blocksRef.current, { scaleX: 0, transformOrigin: "left" });
 
-    const links = interceptLinks ? document.querySelectorAll('a[href^="/"]') : [];
+    const links = interceptLinks
+      ? document.querySelectorAll('a[href^="/"]')
+      : [];
     links.forEach((link) => link.addEventListener("click", onAnchorClick));
 
     return () => {
       links.forEach((link) => link.removeEventListener("click", onAnchorClick));
       if (revealTimeoutRef.current) clearTimeout(revealTimeoutRef.current);
     };
-  }, [pathname, onAnchorClick, revealPage, blockCount, interceptLinks, blockStyle]);
+  }, [
+    pathname,
+    onAnchorClick,
+    revealPage,
+    blockCount,
+    interceptLinks,
+    blockStyle,
+  ]);
 
   // Reveal only after a navigation occurred (not on initial load)
   useEffect(() => {

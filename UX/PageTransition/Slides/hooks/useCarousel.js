@@ -8,9 +8,7 @@ import { useMarquee } from "./useMarquee.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 export function useCarousel() {
-
   const carouselRef = useRef(null);
   const { initMarqueeAnimation } = useMarquee();
 
@@ -92,7 +90,7 @@ export function useCarousel() {
               initMarqueeAnimation,
               () => {
                 isAnimatingSlide = false;
-              }
+              },
             );
 
             if (result) {
@@ -121,7 +119,12 @@ export function useCarousel() {
 
       // As a safety net, unwrap pin-spacer if it remains
       try {
-        if (root && root.parentNode && root.parentNode.classList && root.parentNode.classList.contains('pin-spacer')) {
+        if (
+          root &&
+          root.parentNode &&
+          root.parentNode.classList &&
+          root.parentNode.classList.contains("pin-spacer")
+        ) {
           const pinSpacer = root.parentNode;
           const parent = pinSpacer.parentNode;
           if (parent) {
@@ -133,7 +136,7 @@ export function useCarousel() {
 
       // Stop marquee tickers on all h1s to avoid late ticks during unmount
       if (root) {
-        const marqueeEls = root.querySelectorAll('.marquee-container h1');
+        const marqueeEls = root.querySelectorAll(".marquee-container h1");
         marqueeEls.forEach((el) => {
           if (el._marqueeTick) {
             gsap.ticker.remove(el._marqueeTick);
@@ -143,7 +146,7 @@ export function useCarousel() {
         // Kill all tweens targeting carousel and descendants to prevent onComplete DOM removals
         try {
           gsap.killTweensOf(root);
-          const all = root.querySelectorAll('*');
+          const all = root.querySelectorAll("*");
           gsap.killTweensOf(all);
         } catch {}
       }

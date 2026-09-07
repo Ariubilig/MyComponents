@@ -58,59 +58,65 @@ const Overview = () => {
 
   return (
     <>
-    <br /><br /><br /><br /><br /><br /><br />
-    <div className="overview-page">
-      <div className="whitespace-300"></div>
-      <div className="table">
-        <div className="t-row" id="table-header">
-          <div className="index">
-            <p>#</p>
-          </div>
-          <div className="title">
-            <p>Title</p>
-          </div>
-          <div className="category">
-            <p>Category</p>
-          </div>
-          <div className="time">
-            <p>Running Time</p>
-          </div>
-          <div className="year">
-            <p>Year</p>
-          </div>
-        </div>
-        {projects.map((project, index) => (
-          <div
-          className={`t-row ${
-            hoveredIndex !== null && index !== hoveredIndex
-            ? "not-hovered"
-            : ""
-            }`}
-            key={index}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            >
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div className="overview-page">
+        <div className="whitespace-300"></div>
+        <div className="table">
+          <div className="t-row" id="table-header">
             <div className="index">
-              <p>0{index + 1}</p>
+              <p>#</p>
             </div>
             <div className="title">
-              <p>{project.title}</p>
+              <p>Title</p>
             </div>
             <div className="category">
-              <p>{project.category}</p>
+              <p>Category</p>
             </div>
             <div className="time">
-              <p
-                dangerouslySetInnerHTML={{ __html: project["running time"] }}
-                ></p>
+              <p>Running Time</p>
             </div>
             <div className="year">
-              <p>{project.year}</p>
+              <p>Year</p>
             </div>
           </div>
-        ))}
+          {projects.map((project, index) => (
+            <div
+              className={`t-row ${
+                hoveredIndex !== null && index !== hoveredIndex
+                  ? "not-hovered"
+                  : ""
+              }`}
+              key={index}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <div className="index">
+                <p>0{index + 1}</p>
+              </div>
+              <div className="title">
+                <p>{project.title}</p>
+              </div>
+              <div className="category">
+                <p>{project.category}</p>
+              </div>
+              <div className="time">
+                <p
+                  dangerouslySetInnerHTML={{ __html: project["running time"] }}
+                ></p>
+              </div>
+              <div className="year">
+                <p>{project.year}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 };

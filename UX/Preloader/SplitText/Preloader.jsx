@@ -1,13 +1,10 @@
-import './Preloader.css'
-import { useEffect, useState } from 'react';
-import gsap from 'gsap';
-import { SplitText } from 'gsap/SplitText';
-import { useFontsReady } from '../../hooks/useFontsReady';
-
+import "./Preloader.css";
+import { useEffect, useState } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { useFontsReady } from "../../hooks/useFontsReady";
 
 export default function Preloader({ onFinish }) {
-
-
   const [shouldShow, setShouldShow] = useState(true);
   const fontsReady = useFontsReady(); // ⬅ FONTS HOOK
 
@@ -16,7 +13,7 @@ export default function Preloader({ onFinish }) {
     // WAIT for fonts BEFORE doing ANYTHING
     if (!fontsReady) return;
 
-    const sessionLoaded = sessionStorage.getItem('sessionLoaded');
+    const sessionLoaded = sessionStorage.getItem("sessionLoaded");
 
     if (sessionLoaded) {
       setShouldShow(false);
@@ -30,9 +27,9 @@ export default function Preloader({ onFinish }) {
 
     const splitTextIntoLines = (selector, options = {}) => {
       const defaults = {
-        type: 'lines',
-        mask: 'lines',
-        linesClass: 'line',
+        type: "lines",
+        mask: "lines",
+        linesClass: "line",
         ...options,
       };
       return SplitText.create(selector, defaults);
@@ -58,11 +55,11 @@ export default function Preloader({ onFinish }) {
 
             counterElement.textContent = currentValue
               .toString()
-              .padStart(2, '0');
+              .padStart(2, "0");
 
             setTimeout(updateCounter, updateInterval + Math.random() * 100);
           } else {
-            counterElement.textContent = '100';
+            counterElement.textContent = "100";
           }
         };
 
@@ -70,34 +67,33 @@ export default function Preloader({ onFinish }) {
       }, delay * 1000);
     };
 
-    animateCounter('.preloader-counter p', 4.5, 2);
+    animateCounter(".preloader-counter p", 4.5, 2);
 
     // --- SplitText + GSAP animation ---
     const runSplitAndAnimation = () => {
-      splitTextIntoLines('.preloader-copy p');
-      splitTextIntoLines('.preloader-counter p');
+      splitTextIntoLines(".preloader-copy p");
+      splitTextIntoLines(".preloader-counter p");
 
       tl = gsap.timeline({
         onComplete: () => {
-          sessionStorage.setItem('sessionLoaded', 'true');
+          sessionStorage.setItem("sessionLoaded", "true");
           setShouldShow(false);
           onFinish?.();
         },
       });
 
-      tl.to(['.preloader-copy p .line', '.preloader-counter p .line'], {
-        y: '0%',
+      tl.to([".preloader-copy p .line", ".preloader-counter p .line"], {
+        y: "0%",
         duration: 1,
         stagger: 0.075,
-        ease: 'power3.out',
+        ease: "power3.out",
         delay: 1,
-      })
-        .to('.preloader', {
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-          duration: 1.25,
-          ease: 'power3.out',
-          delay: 3.5,
-        });
+      }).to(".preloader", {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        duration: 1.25,
+        ease: "power3.out",
+        delay: 3.5,
+      });
     };
 
     // Run animation (fonts already ready)
@@ -106,16 +102,13 @@ export default function Preloader({ onFinish }) {
     return () => {
       tl?.kill();
     };
-
   }, [onFinish, fontsReady]); // ⬅ ✔ ADD fontsReady dependency
-
 
   // EARLY EXIT — do NOT render preloader DOM (after hooks)
   if (!shouldShow) return null;
 
   return (
     <>
-
       <div className="preloader">
         <div className="preloader-copy">
           <div className="preloader-copy-col">
@@ -136,9 +129,6 @@ export default function Preloader({ onFinish }) {
           <p>00</p>
         </div>
       </div>
-
     </>
   );
-  
-  
 }

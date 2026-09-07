@@ -1,15 +1,12 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import "./Preloader.css";
-import { usePreloaderGuard } from '../../hooks/useGuard';
-
-
+import { usePreloaderGuard } from "../../hooks/useGuard";
 
 const Preloader = ({ onFinish }) => {
-
   const { shouldShow, finish } = usePreloaderGuard({
-    duration: 5000,        // total GSAP timeline time
-    minDisplayTime: 1200,  // prevent flash
+    duration: 5000, // total GSAP timeline time
+    minDisplayTime: 1200, // prevent flash
   });
 
   // Track if onFinish has been called to prevent double-calling
@@ -31,7 +28,7 @@ const Preloader = ({ onFinish }) => {
       onComplete: () => {
         if (!hasCalledFinish.current) {
           hasCalledFinish.current = true;
-          finish();     // tell guard animation done
+          finish(); // tell guard animation done
           onFinish?.(); // tell App animation finished
         }
       },
@@ -67,6 +64,5 @@ const Preloader = ({ onFinish }) => {
     </div>
   );
 };
-
 
 export default Preloader;

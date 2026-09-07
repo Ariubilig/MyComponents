@@ -14,11 +14,11 @@ html::-webkit-scrollbar {
 
 .scrollbar {
   /* Override these from the `className` prop's wrapper class. */
-  --sb-hit: 20px;              /* width of the interactive column */
-  --sb-inset: 14px;            /* viewport edge -> bar axis */
+  --sb-hit: 20px; /* width of the interactive column */
+  --sb-inset: 14px; /* viewport edge -> bar axis */
   --sb-height: 50vh;
-  --sb-thickness: 2px;         /* resting hairline width */
-  --sb-thickness-hover: 10px;  /* thumb width while hovered/dragged */
+  --sb-thickness: 2px; /* resting hairline width */
+  --sb-thickness-hover: 10px; /* thumb width while hovered/dragged */
   --sb-radius: 999px;
   --sb-track-color: rgb(0 0 0 / 0.1);
   --sb-thumb-color: rgb(0 0 0 / 0.4);
@@ -41,12 +41,20 @@ html::-webkit-scrollbar {
 }
 
 /* The inset is measured to the bar's axis, so the hit column straddles it. */
-.scrollbar--right { right: calc(var(--sb-inset) - var(--sb-hit) / 2); }
-.scrollbar--left  { left:  calc(var(--sb-inset) - var(--sb-hit) / 2); }
+.scrollbar--right {
+  right: calc(var(--sb-inset) - var(--sb-hit) / 2);
+}
+.scrollbar--left {
+  left: calc(var(--sb-inset) - var(--sb-hit) / 2);
+}
 
-.scrollbar.is-active { opacity: 1; }
+.scrollbar.is-active {
+  opacity: 1;
+}
 .scrollbar.is-active .scrollbar__track,
-.scrollbar.is-active .scrollbar__thumb { pointer-events: auto; }
+.scrollbar.is-active .scrollbar__thumb {
+  pointer-events: auto;
+}
 
 /*
  * Track and thumb fill the hit column and are themselves transparent; the
@@ -74,7 +82,9 @@ html::-webkit-scrollbar {
   cursor: grab;
 }
 
-.scrollbar.is-dragging .scrollbar__thumb { cursor: grabbing; }
+.scrollbar.is-dragging .scrollbar__thumb {
+  cursor: grabbing;
+}
 
 .scrollbar__track::after,
 .scrollbar__thumb::after {
@@ -91,8 +101,12 @@ html::-webkit-scrollbar {
     background-color var(--sb-ease);
 }
 
-.scrollbar__track::after { background-color: var(--sb-track-color); }
-.scrollbar__thumb::after { background-color: var(--sb-thumb-color); }
+.scrollbar__track::after {
+  background-color: var(--sb-track-color);
+}
+.scrollbar__thumb::after {
+  background-color: var(--sb-thumb-color);
+}
 
 .scrollbar:hover .scrollbar__thumb::after,
 .scrollbar.is-dragging .scrollbar__thumb::after {
@@ -118,5 +132,7 @@ html::-webkit-scrollbar {
 
 /* Touch devices get the native overlay scrollbar instead. */
 @media (hover: none) and (pointer: coarse) {
-  .scrollbar { display: none; }
+  .scrollbar {
+    display: none;
+  }
 }

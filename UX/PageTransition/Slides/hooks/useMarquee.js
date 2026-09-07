@@ -1,8 +1,6 @@
 import gsap from "gsap";
 
-
 export function useMarquee() {
-
   const initMarqueeAnimation = (h1Element) => {
     if (!h1Element) return;
 
@@ -12,7 +10,8 @@ export function useMarquee() {
       h1Element._marqueeTick = null;
     }
 
-    const baseText = h1Element.getAttribute("data-text") || h1Element.textContent.trim();
+    const baseText =
+      h1Element.getAttribute("data-text") || h1Element.textContent.trim();
     h1Element.setAttribute("data-text", baseText);
     h1Element.innerHTML = `<span class="marquee-unit">${baseText}</span><span class="marquee-unit">${baseText}</span>`;
 

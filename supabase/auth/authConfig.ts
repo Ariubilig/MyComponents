@@ -22,11 +22,11 @@
 
 export interface PasswordPolicy {
   /** Managed Supabase enforces a floor of 6; the project default is also 6. */
-  minLength: number
-  requireLowercase: boolean
-  requireUppercase: boolean
-  requireNumber: boolean
-  requireSymbol: boolean
+  minLength: number;
+  requireLowercase: boolean;
+  requireUppercase: boolean;
+  requireNumber: boolean;
+  requireSymbol: boolean;
 }
 
 /** Edit to match your dashboard. Defaults mirror a fresh Supabase project. */
@@ -36,12 +36,12 @@ export const PASSWORD_POLICY: PasswordPolicy = {
   requireUppercase: false,
   requireNumber: false,
   requireSymbol: false,
-}
+};
 
 /* Characters Supabase counts toward the "symbol" requirement. Space is NOT in
  * the set. Verify against the current docs if you rely on the exact list:
  *   https://supabase.com/docs/guides/auth/password-security */
-const SYMBOLS = '!@#$%^&*()_+-=[]{};\'\\:"|<>?,./`~'
+const SYMBOLS = "!@#$%^&*()_+-=[]{};'\\:\"|<>?,./`~";
 
 /**
  * Validate a password against the policy. Returns the first human-readable
@@ -55,19 +55,19 @@ export function validatePassword(
   policy: PasswordPolicy = PASSWORD_POLICY,
 ): string | null {
   if (password.length < policy.minLength) {
-    return `Password must be at least ${policy.minLength} characters.`
+    return `Password must be at least ${policy.minLength} characters.`;
   }
   if (policy.requireLowercase && !/[a-z]/.test(password)) {
-    return 'Password must include a lowercase letter.'
+    return "Password must include a lowercase letter.";
   }
   if (policy.requireUppercase && !/[A-Z]/.test(password)) {
-    return 'Password must include an uppercase letter.'
+    return "Password must include an uppercase letter.";
   }
   if (policy.requireNumber && !/\d/.test(password)) {
-    return 'Password must include a number.'
+    return "Password must include a number.";
   }
   if (policy.requireSymbol && ![...password].some((c) => SYMBOLS.includes(c))) {
-    return 'Password must include a symbol.'
+    return "Password must include a symbol.";
   }
-  return null
+  return null;
 }

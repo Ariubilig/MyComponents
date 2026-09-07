@@ -1,8 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-
+import { useState, useEffect, useRef } from "react";
 
 const SpotlightGallery = () => {
-
   const [currentExpandedIndex, setCurrentExpandedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [clickedItems, setClickedItems] = useState(new Set());
@@ -25,8 +23,8 @@ const SpotlightGallery = () => {
     };
 
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
   // Calculate positions for each item
@@ -84,105 +82,106 @@ const SpotlightGallery = () => {
   const handleClick = (index) => {
     if (isMobile) {
       const newClickedItems = new Set(clickedItems);
-      
+
       if (newClickedItems.has(index) && currentExpandedIndex === index) {
         newClickedItems.delete(index);
-        const nextIndex = newClickedItems.size > 0 ? Math.min(...newClickedItems) : 0;
+        const nextIndex =
+          newClickedItems.size > 0 ? Math.min(...newClickedItems) : 0;
         setCurrentExpandedIndex(nextIndex);
       } else {
         newClickedItems.add(index);
         setCurrentExpandedIndex(index);
       }
-      
+
       setClickedItems(newClickedItems);
     }
   };
 
   const styles = {
     spotlight: {
-      position: 'relative',
-      width: '100%',
-      height: '100vh',
-      backgroundColor: '#000000',
-      overflow: 'hidden',
+      position: "relative",
+      width: "100%",
+      height: "100vh",
+      backgroundColor: "#000000",
+      overflow: "hidden",
     },
     container: {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      width: '90vw',
-      maxWidth: '1400px',
-      display: 'flex',
-      justifyContent: 'center',
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      width: "90vw",
+      maxWidth: "1400px",
+      display: "flex",
+      justifyContent: "center",
       padding: 0,
-      transform: 'translate(-50%, -50%)',
-      transformOrigin: 'center',
+      transform: "translate(-50%, -50%)",
+      transformOrigin: "center",
     },
     gallery: {
-      position: 'relative',
-      width: '100%',
-      height: '400px',
-      margin: '0 auto',
+      position: "relative",
+      width: "100%",
+      height: "400px",
+      margin: "0 auto",
     },
     galleryItem: (index) => ({
-      position: 'absolute',
+      position: "absolute",
       top: 0,
       left: `${positions[index]?.left || 0}px`,
       width: `${positions[index]?.width || collapsedWidth}px`,
-      height: '400px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      background: '#000',
-      transition: 'all 1s cubic-bezier(0.075, 0.82, 0.165, 1)',
-      overflow: 'hidden',
-      willChange: 'left, width',
-      cursor: isMobile ? 'pointer' : 'default',
+      height: "400px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      background: "#000",
+      transition: "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)",
+      overflow: "hidden",
+      willChange: "left, width",
+      cursor: isMobile ? "pointer" : "default",
     }),
     image: (isExpanded) => ({
-      width: '400px',
-      height: '100%',
-      objectFit: 'contain',
-      transform: isExpanded ? 'scale(1)' : 'scale(1.5)',
-      transition: 'transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1)',
+      width: "400px",
+      height: "100%",
+      objectFit: "contain",
+      transform: isExpanded ? "scale(1)" : "scale(1.5)",
+      transition: "transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1)",
     }),
     nav: {
-      position: 'absolute',
-      top: '20px',
-      left: '20px',
+      position: "absolute",
+      top: "20px",
+      left: "20px",
       zIndex: 10,
-      color: '#fff',
-      fontSize: '16px',
+      color: "#fff",
+      fontSize: "16px",
     },
     navLink: {
-      color: '#fff',
-      textDecoration: 'none',
-      margin: '0 10px',
+      color: "#fff",
+      textDecoration: "none",
+      margin: "0 10px",
     },
   };
 
   return (
     <div style={styles.spotlight}>
-
       <div style={styles.container}>
         <div style={styles.gallery} ref={containerRef}>
-          {Array.from({ length: itemCount }, (_, i) => i + 1).map((num, index) => (
-            <div
-              key={index}
-              style={styles.galleryItem(index)}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onClick={() => handleClick(index)}
-            >
-              <img
-                src={`spotlight/spotlight-${num}.jpg`}
-                alt={`Spotlight ${num}`}
-                style={styles.image(index === currentExpandedIndex)}
-              />
-            </div>
-          ))}
+          {Array.from({ length: itemCount }, (_, i) => i + 1).map(
+            (num, index) => (
+              <div
+                key={index}
+                style={styles.galleryItem(index)}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onClick={() => handleClick(index)}
+              >
+                <img
+                  src={`spotlight/spotlight-${num}.jpg`}
+                  alt={`Spotlight ${num}`}
+                  style={styles.image(index === currentExpandedIndex)}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
-
     </div>
   );
 };

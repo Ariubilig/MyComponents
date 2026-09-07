@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from 'react'
-import { useAuth } from './AuthProvider'
-import { PASSWORD_POLICY, validatePassword } from './authConfig'
+import { useState, type FormEvent } from "react";
+import { useAuth } from "./AuthProvider";
+import { PASSWORD_POLICY, validatePassword } from "./authConfig";
 
-type Mode = 'signin' | 'signup' | 'reset'
+type Mode = "signin" | "signup" | "reset";
 
 /**
  * Minimal email/password auth form. No styling — wire up your own CSS.
@@ -14,73 +14,81 @@ type Mode = 'signin' | 'signup' | 'reset'
  * navigate on success").
  */
 export default function AuthForm() {
-  const { signIn, signUp, resetPassword } = useAuth()
-  const [mode, setMode] = useState<Mode>('signin')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [info, setInfo] = useState<string | null>(null)
+  const { signIn, signUp, resetPassword } = useAuth();
+  const [mode, setMode] = useState<Mode>("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
 
   const switchMode = (m: Mode) => {
-    setMode(m)
-    setError(null)
-    setInfo(null)
-  }
+    setMode(m);
+    setError(null);
+    setInfo(null);
+  };
 
   const submit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setInfo(null)
+    e.preventDefault();
+    setError(null);
+    setInfo(null);
 
     if (!email) {
-      setError('Email is required.')
-      return
+      setError("Email is required.");
+      return;
     }
-    if (mode !== 'reset' && !password) {
-      setError('Password is required.')
-      return
+    if (mode !== "reset" && !password) {
+      setError("Password is required.");
+      return;
     }
-    if (mode === 'signup') {
+    if (mode === "signup") {
       // Validate against the policy on sign-UP only. Existing users may have a
       // password that predates a policy change — sign-in just submits and lets
       // Supabase return a WeakPasswordError if it no longer qualifies.
-      const pwError = validatePassword(password)
+      const pwError = validatePassword(password);
       if (pwError) {
-        setError(pwError)
-        return
+        setError(pwError);
+        return;
       }
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
-      if (mode === 'signin') {
-        const { error } = await signIn(email, password)
-        if (error) throw error
-      } else if (mode === 'signup') {
-        const { error, needsEmailConfirmation } = await signUp(email, password)
-        if (error) throw error
+      if (mode === "signin") {
+        const { error } = await signIn(email, password);
+        if (error) throw error;
+      } else if (mode === "signup") {
+        const { error, needsEmailConfirmation } = await signUp(email, password);
+        if (error) throw error;
         if (needsEmailConfirmation) {
-          setInfo('Check your email to confirm your account, then sign in.')
-          setMode('signin')
+          setInfo("Check your email to confirm your account, then sign in.");
+          setMode("signin");
         }
       } else {
-        const { error } = await resetPassword(email)
-        if (error) throw error
+        const { error } = await resetPassword(email);
+        if (error) throw error;
         // Neutral message — don't reveal whether the email is registered.
-        setInfo('If that email exists, a reset link is on its way.')
+        setInfo("If that email exists, a reset link is on its way.");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const title =
-    mode === 'signin' ? 'Sign in' : mode === 'signup' ? 'Create account' : 'Reset password'
+    mode === "signin"
+      ? "Sign in"
+      : mode === "signup"
+        ? "Create account"
+        : "Reset password";
   const submitLabel =
-    mode === 'signin' ? 'Sign in' : mode === 'signup' ? 'Sign up' : 'Send reset link'
+    mode === "signin"
+      ? "Sign in"
+      : mode === "signup"
+        ? "Sign up"
+        : "Send reset link";
 
   return (
     <form onSubmit={submit}>
@@ -98,14 +106,16 @@ export default function AuthForm() {
         />
       </label>
 
-      {mode !== 'reset' && (
+      {mode !== "reset" && (
         <label>
           Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+            autoComplete={
+              mode === "signin" ? "current-password" : "new-password"
+            }
             required
             minLength={PASSWORD_POLICY.minLength}
             disabled={loading}
@@ -117,31 +127,47 @@ export default function AuthForm() {
       {info && <p role="status">{info}</p>}
 
       <button type="submit" disabled={loading}>
-        {loading ? 'Please wait…' : submitLabel}
+        {loading ? "Please wait…" : submitLabel}
       </button>
 
-      {mode === 'signin' && (
+      {mode === "signin" && (
         <>
-          <button type="button" onClick={() => switchMode('reset')} disabled={loading}>
+          <button
+            type="button"
+            onClick={() => switchMode("reset")}
+            disabled={loading}
+          >
             Forgot password?
           </button>
-          <button type="button" onClick={() => switchMode('signup')} disabled={loading}>
+          <button
+            type="button"
+            onClick={() => switchMode("signup")}
+            disabled={loading}
+          >
             Need an account? Sign up
           </button>
         </>
       )}
 
-      {mode === 'signup' && (
-        <button type="button" onClick={() => switchMode('signin')} disabled={loading}>
+      {mode === "signup" && (
+        <button
+          type="button"
+          onClick={() => switchMode("signin")}
+          disabled={loading}
+        >
           Have an account? Sign in
         </button>
       )}
 
-      {mode === 'reset' && (
-        <button type="button" onClick={() => switchMode('signin')} disabled={loading}>
+      {mode === "reset" && (
+        <button
+          type="button"
+          onClick={() => switchMode("signin")}
+          disabled={loading}
+        >
           Back to sign in
         </button>
       )}
     </form>
-  )
+  );
 }

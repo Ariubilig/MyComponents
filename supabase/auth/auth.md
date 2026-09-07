@@ -34,7 +34,7 @@ and `UpdatePassword` (the reset-link landing screen) — plus `routes.ts` and
 
 ```tsx
 // read auth state anywhere
-const { user, loading, signIn } = useAuth()
+const { user, loading, signIn } = useAuth();
 ```
 
 ## What this provider does / doesn't do
@@ -65,7 +65,7 @@ If it isn't, Supabase silently falls back to the Site URL and the flow breaks. B
 ### The reset is two steps
 
 - `resetPassword(email)` — **step 1**, sends the email.
-- `updatePassword(newPassword)` — **step 2**, call it from the update-password screen *after* the user arrives via the recovery link.
+- `updatePassword(newPassword)` — **step 2**, call it from the update-password screen _after_ the user arrives via the recovery link.
 
 When the user lands via that link, Supabase establishes a temporary recovery session from the URL; `updatePassword` relies on it. Calling `updatePassword` without that session will return an error.
 
@@ -73,7 +73,7 @@ When the user lands via that link, Supabase establishes a temporary recovery ses
 
 `UpdatePassword` shows its "invalid or expired link" branch whenever `user` is falsy after `loading` resolves. On a **valid** link this is fine: in supabase-js v2, `getSession()` awaits the client's init, which processes the recovery token in the URL first (both implicit and PKCE flows), so the recovered session is present the moment `loading` flips.
 
-But that correctness depends entirely on the client establishing the recovery session *before* `loading` resolves, and several upstream things can break it per-environment: a mismatched `flowType`, the redirect URL not being allowlisted (see above), or an email template that strips the token. So run the real reset flow in each environment after deploying. If you ever see the invalid-link UI flash on a known-good link, the cause is client/flow config upstream — not this component — and the fix is to gate the invalid branch on an actual `PASSWORD_RECOVERY` auth event instead of `!user`.
+But that correctness depends entirely on the client establishing the recovery session _before_ `loading` resolves, and several upstream things can break it per-environment: a mismatched `flowType`, the redirect URL not being allowlisted (see above), or an email template that strips the token. So run the real reset flow in each environment after deploying. If you ever see the invalid-link UI flash on a known-good link, the cause is client/flow config upstream — not this component — and the fix is to gate the invalid branch on an actual `PASSWORD_RECOVERY` auth event instead of `!user`.
 
 ### Password rules live in `authConfig.ts`
 
@@ -86,7 +86,7 @@ export const PASSWORD_POLICY = {
   requireUppercase: false,
   requireNumber: false,
   requireSymbol: false,
-}
+};
 ```
 
 This is a **client-side mirror** for fast inline feedback only — Supabase enforces the real policy server-side (Dashboard → Authentication → Sign In / Providers → Email → Password Requirements). Keep it honest:
@@ -110,14 +110,21 @@ So whatever renders `AuthForm` (typically your login route) must redirect to `RO
 
 ```tsx
 function RedirectIfAuthed({ children }: { children: ReactNode }) {
-  const { user, loading } = useAuth()
-  if (loading) return null
-  if (user) return <Navigate to={ROUTES.root} replace />
-  return <>{children}</>
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  if (user) return <Navigate to={ROUTES.root} replace />;
+  return <>{children}</>;
 }
 
 // then:
-<Route path={ROUTES.login} element={<RedirectIfAuthed><AuthForm /></RedirectIfAuthed>} />
+<Route
+  path={ROUTES.login}
+  element={
+    <RedirectIfAuthed>
+      <AuthForm />
+    </RedirectIfAuthed>
+  }
+/>;
 ```
 
 Note that `UpdatePassword` must stay on a **plain** route — do not wrap it in `RedirectIfAuthed`, or the recovery session (where `user` is already truthy) gets bounced to `ROUTES.root` before the new password is submitted.
