@@ -1,0 +1,44 @@
+/*
+ * Harness chrome only. Each test page owns its own background and type, so
+ * there is nothing global here beyond the reset and the back link.
+ */
+/*
+ * The components assume the border-box reset every real app ships with —
+ * `Overview.css` sets `width: 100%` and `padding: 1em` on the same element and
+ * overflows by 2em without it. Kept here rather than in the component so the
+ * copies under `src/components/` stay diffable against the UI folder.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/*
+ * Sits on top of whatever the test page paints, and the pages run from #fbfbf9
+ * to solid black — so the pill is dark with light text and a light hairline,
+ * which holds contrast against both ends rather than only the light one.
+ */
+.harness-back {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+}
+
+.harness-back:hover {
+  background: rgb(0 0 0 / 0.8);
+}

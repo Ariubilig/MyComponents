@@ -1,0 +1,37 @@
+/* Test-page styles only — none of this is needed by the component. */
+.sb-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 4rem 1.5rem 8rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.sb-demo > * {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.sb-demo h1 {
+  /* Must restate the inline auto: the shorthand would reset the centring
+     inherited from `.sb-demo > *`, which wins on specificity. */
+  margin: 0 auto 0.5rem;
+  font-size: 2rem;
+}
+
+.sb-demo p {
+  line-height: 1.6;
+}
+
+/* Spread out enough to give the bar a long scroll range to map. */
+.sb-demo__filler {
+  margin: 3rem auto;
+  opacity: 0.25;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The `--sb-*` overrides land here — this is what `className` is for. */
+.sb-demo__bar {
+  --sb-height: 40vh;
+}

@@ -1,0 +1,47 @@
+/* Test-page styles only. */
+.reveal-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 6rem 1.5rem 40vh;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.reveal-demo > * {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.reveal-demo button {
+  display: block;
+  margin: 0 auto 4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* Spaced out so the scroll-triggered blocks actually start off screen. */
+.reveal-demo section {
+  margin-bottom: 60vh;
+}
+
+.reveal-demo h2 {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.reveal-demo p {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}

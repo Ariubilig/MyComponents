@@ -1,0 +1,54 @@
+/* Test-page styles only. */
+.preloader-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+  text-align: center;
+}
+
+.preloader-demo h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.preloader-demo p {
+  margin: 0 0 2rem;
+  opacity: 0.6;
+}
+
+.preloader-demo button {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/*
+ * The component renders `className="Preloader-screen"` but its own
+ * `Preloader.css` only ever styles `.loading-screen` — a name it never uses —
+ * so out of the box the overlay is unstyled text in normal flow. These are
+ * that stylesheet's declarations under the class the component actually
+ * renders, so the test shows what the component is meant to look like.
+ */
+.Preloader-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111;
+  color: #fff;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  z-index: 9999;
+}

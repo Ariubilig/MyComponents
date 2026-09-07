@@ -1,0 +1,61 @@
+/*
+ * Showcase-only styles — none of this is needed by the component.
+ *
+ * The ground is pinned to light on purpose: the highlight colours are pastels
+ * meant to sit under dark text, so inheriting the browser's dark scheme would
+ * leave the demo unreadable.
+ */
+.th-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.th-demo > section {
+  max-width: 42rem;
+  margin: 0 auto 6rem;
+}
+
+.th-demo h2 {
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.th-demo p {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.th-demo__controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.th-demo__controls button {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/*
+ * Padding goes on the highlighted span, so the marker overshoots the glyphs
+ * the way a real one would. The negative margin keeps the text on its grid.
+ */
+.th-demo__wrap {
+  padding: 0.1em 0.2em;
+  margin: 0 -0.2em;
+}

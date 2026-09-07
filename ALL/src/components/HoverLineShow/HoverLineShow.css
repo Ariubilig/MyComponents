@@ -1,0 +1,46 @@
+/*
+ * Scoped under `.clients-list` rather than the source's bare `*`, `body` and
+ * `h1` selectors. The original is the only thing on its page and can afford
+ * globals; here it shares a document with every other test, and `* { margin: 0 }`
+ * would quietly restyle all of them.
+ */
+.clients-list {
+  /* Only meaningful against a non-black backdrop, but that's the source's
+     intent and it costs nothing here. */
+  mix-blend-mode: difference;
+  font-family: sans-serif;
+}
+
+.clients-list h1 {
+  /* Stood in for `* { margin: 0 }`: the names are meant to run together, with
+     only the inline-block whitespace separating them. */
+  margin: 0;
+  font-weight: 500;
+}
+
+.client-name {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+
+.client-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.15rem;
+  background: #ffffff;
+  transform: scaleX(0);
+  /* Retracts to the right on the way out... */
+  transform-origin: right;
+  transition: transform 300ms ease-out;
+}
+
+.client-name:hover::after {
+  transform: scaleX(1);
+  /* ...and grows from the left on the way in. */
+  transform-origin: left;
+}

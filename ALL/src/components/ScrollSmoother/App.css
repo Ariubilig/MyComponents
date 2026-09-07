@@ -1,0 +1,40 @@
+/* Test-page styles only. */
+.smoother-demo {
+  color-scheme: light;
+  padding: 6rem 1.5rem 12rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.smoother-demo > * {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.smoother-demo h1 {
+  margin: 0 auto 0.5rem;
+  font-size: 1.5rem;
+}
+
+.smoother-demo p {
+  line-height: 1.6;
+  opacity: 0.6;
+}
+
+.smoother-demo section {
+  display: grid;
+  place-items: center;
+  height: 40vh;
+  margin: 2rem auto;
+  border: 1px solid rgb(0 0 0 / 0.1);
+  border-radius: 0.5rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.35;
+}
+
+/* The parallax pair, so they read as deliberate rather than as glitches. */
+.smoother-demo section[data-speed] {
+  border-color: rgb(0 0 0 / 0.35);
+  opacity: 0.8;
+}

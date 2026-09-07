@@ -1,0 +1,106 @@
+/*
+ * Everything here is prefixed `harness`. The component stylesheets under
+ * `src/` are global and some of them claim very ordinary names — `Overview.css`
+ * alone takes `.index`, `.title`, `.category`, `.time` and `.year` — so the
+ * page that lists them cannot use ordinary names itself.
+ */
+.harness {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.harness__head,
+.harness__group {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.harness__head {
+  margin-bottom: 3rem;
+}
+
+.harness__head h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.harness__head p {
+  margin: 0;
+  max-width: 34rem;
+  line-height: 1.6;
+  opacity: 0.6;
+}
+
+.harness code {
+  padding: 0.1em 0.35em;
+  border-radius: 0.25em;
+  background: rgb(0 0 0 / 0.05);
+  font-size: 0.9em;
+}
+
+.harness__group {
+  margin-bottom: 3rem;
+}
+
+.harness__group h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.harness__list {
+  padding: 0;
+  list-style: none;
+}
+
+.harness__item {
+  display: grid;
+  /* Title and source on one line, blurb spanning underneath. */
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgb(0 0 0 / 0.1);
+  color: inherit;
+  text-decoration: none;
+}
+
+.harness__list li:last-child .harness__item {
+  border-bottom: 1px solid rgb(0 0 0 / 0.1);
+}
+
+.harness__item:hover {
+  background: rgb(0 0 0 / 0.02);
+}
+
+.harness__title {
+  font-weight: 500;
+}
+
+.harness__blurb {
+  grid-column: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  opacity: 0.55;
+}
+
+.harness__source {
+  grid-row: 1;
+  grid-column: 2;
+  align-self: start;
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+.harness__item:hover .harness__title {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

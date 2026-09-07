@@ -1,0 +1,22 @@
+/* Test-page styles only. */
+.marquee-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.marquee-demo > button {
+  display: block;
+  margin: 0 auto 2rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}

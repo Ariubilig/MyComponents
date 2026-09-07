@@ -1,0 +1,7 @@
+/* Test-page styles only — the black ground the source set on `body`. */
+.hls-demo {
+  color-scheme: dark;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+  background-color: #000000;
+}

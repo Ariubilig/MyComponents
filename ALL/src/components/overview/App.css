@@ -1,0 +1,13 @@
+/*
+ * Test-page styles only.
+ *
+ * Overview.css paints its header white and its rows grey, which only reads on
+ * a dark ground — that ground is the page's job, not the component's.
+ */
+.ov-demo {
+  color-scheme: dark;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+  background: #0a0a0a;
+  font-family: system-ui, sans-serif;
+}
