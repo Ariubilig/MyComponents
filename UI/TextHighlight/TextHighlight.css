@@ -1,0 +1,15 @@
+/*
+ * Static half of the highlight. Everything that depends on props — the colour
+ * and the animated background-size — is set inline by the component.
+ */
+.text-highlight {
+  /* Must stay inline so the highlight wraps with the text instead of becoming
+     a block behind it. */
+  display: inline;
+  background-repeat: no-repeat;
+
+  /* Without this the gradient is painted once across the whole wrapped span,
+     so lines 2..n get a slice of the middle. `clone` repaints it per line. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

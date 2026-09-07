@@ -1,0 +1,75 @@
+/*
+ * Showcase-only styles — none of this is needed by the component.
+ *
+ * The ground is pinned to light on purpose, so the demo doesn't inherit the
+ * browser's dark scheme and render black text on a black page.
+ */
+.mbt-demo {
+  color-scheme: light;
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  background: #fbfbf9;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+
+.mbt-demo > section {
+  max-width: 48rem;
+  margin: 0 auto 8rem;
+}
+
+.mbt-demo h2 {
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+/* The line the media opens inside of. */
+.mbt-demo__line {
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  cursor: default;
+}
+
+/* `as` defaults to `p`, which arrives with UA margins that break the row. */
+.mbt-demo__line p {
+  margin: 0;
+}
+
+/*
+ * `mediaContainerClassName` only has to supply the size — the clipping and the
+ * object-fit come from `MediaBetweenText.css`. Height is tied to the text so
+ * the media scales with the line, and `aspect-ratio` is what `width: auto`
+ * resolves against when the reveal finishes.
+ */
+.mbt-demo__media {
+  height: 0.8em;
+  aspect-ratio: 16 / 9;
+  margin: 0 0.1em;
+  border-radius: 0.1em;
+}
+
+.mbt-demo__media--round {
+  border-radius: 999px;
+}
+
+.mbt-demo__controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.mbt-demo__controls button {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}

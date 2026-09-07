@@ -1,0 +1,31 @@
+/*
+ * Static half of the component. The reveal itself — the media container's
+ * width — is animated by Motion, and the container's size is yours to set via
+ * `mediaContainerClassName`.
+ */
+.media-between-text {
+  display: flex;
+  align-items: center;
+}
+
+/*
+ * The reveal animates this box from `width: 0`, so it has to clip: without
+ * `overflow: hidden` the media keeps its intrinsic width and simply overflows
+ * a zero-width parent, which looks like the animation never ran.
+ *
+ * Unlike upstream, `mediaContainerClassName` is appended to this class rather
+ * than replacing it, so your class only has to supply the size.
+ */
+.media-between-text__media {
+  overflow: hidden;
+  flex: none;
+}
+
+/* Fill whatever box the size class defined, without distorting the media. */
+.media-between-text__media > img,
+.media-between-text__media > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
