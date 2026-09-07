@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { gsap } from "gsap";
-import "./FadeDownUpText.css";
+import "./FadeDownUp.css";
 
 const FadeDownUp = ({ children, transitionImage, routeNames }) => {
   const location = useLocation();

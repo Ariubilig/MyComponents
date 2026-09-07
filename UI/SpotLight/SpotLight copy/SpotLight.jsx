@@ -1,5 +1,62 @@
 import { useState, useEffect, useRef } from "react";
 
+const EASE = "cubic-bezier(0.075, 0.82, 0.165, 1)";
+
+/* Static style objects, hoisted out of render. Nothing here depends on props
+ * or state, and hovering re-renders all twenty items — so rebuilding these
+ * every time was roughly sixty throwaway objects per pointer move. */
+const STAGE = {
+  position: "relative",
+  width: "100%",
+  height: "100vh",
+  backgroundColor: "#000000",
+  overflow: "hidden",
+};
+
+const CONTAINER = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  width: "90vw",
+  maxWidth: "1400px",
+  display: "flex",
+  justifyContent: "center",
+  padding: 0,
+  transform: "translate(-50%, -50%)",
+  transformOrigin: "center",
+};
+
+const GALLERY = {
+  position: "relative",
+  width: "100%",
+  height: "400px",
+  margin: "0 auto",
+};
+
+const GALLERY_ITEM = {
+  position: "absolute",
+  top: 0,
+  height: "400px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "#000",
+  transition: `all 1s ${EASE}`,
+  overflow: "hidden",
+  willChange: "left, width",
+};
+
+/* The image style only ever takes two shapes, so they are constants rather
+ * than a factory invoked once per item per render. */
+const IMAGE_BASE = {
+  width: "400px",
+  height: "100%",
+  objectFit: "contain",
+  transition: `transform 0.6s ${EASE}`,
+};
+const IMAGE_EXPANDED = { ...IMAGE_BASE, transform: "scale(1)" };
+const IMAGE_COLLAPSED = { ...IMAGE_BASE, transform: "scale(1.5)" };
+
 const SpotlightGallery = () => {
   const [currentExpandedIndex, setCurrentExpandedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -97,85 +154,34 @@ const SpotlightGallery = () => {
     }
   };
 
-  const styles = {
-    spotlight: {
-      position: "relative",
-      width: "100%",
-      height: "100vh",
-      backgroundColor: "#000000",
-      overflow: "hidden",
-    },
-    container: {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      width: "90vw",
-      maxWidth: "1400px",
-      display: "flex",
-      justifyContent: "center",
-      padding: 0,
-      transform: "translate(-50%, -50%)",
-      transformOrigin: "center",
-    },
-    gallery: {
-      position: "relative",
-      width: "100%",
-      height: "400px",
-      margin: "0 auto",
-    },
-    galleryItem: (index) => ({
-      position: "absolute",
-      top: 0,
-      left: `${positions[index]?.left || 0}px`,
-      width: `${positions[index]?.width || collapsedWidth}px`,
-      height: "400px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#000",
-      transition: "all 1s cubic-bezier(0.075, 0.82, 0.165, 1)",
-      overflow: "hidden",
-      willChange: "left, width",
-      cursor: isMobile ? "pointer" : "default",
-    }),
-    image: (isExpanded) => ({
-      width: "400px",
-      height: "100%",
-      objectFit: "contain",
-      transform: isExpanded ? "scale(1)" : "scale(1.5)",
-      transition: "transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1)",
-    }),
-    nav: {
-      position: "absolute",
-      top: "20px",
-      left: "20px",
-      zIndex: 10,
-      color: "#fff",
-      fontSize: "16px",
-    },
-    navLink: {
-      color: "#fff",
-      textDecoration: "none",
-      margin: "0 10px",
-    },
-  };
+  /* The only three values that genuinely vary per item. */
+  const galleryItemStyle = (index) => ({
+    ...GALLERY_ITEM,
+    left: `${positions[index]?.left || 0}px`,
+    width: `${positions[index]?.width || collapsedWidth}px`,
+    cursor: isMobile ? "pointer" : "default",
+  });
 
   return (
-    <div style={styles.spotlight}>
-      <div style={styles.container}>
-        <div style={styles.gallery} ref={containerRef}>
+    <div style={STAGE}>
+      <div style={CONTAINER}>
+        <div style={GALLERY} ref={containerRef}>
           {Array.from({ length: itemCount }, (_, i) => i + 1).map(
             (num, index) => (
               <div
                 key={index}
-                style={styles.galleryItem(index)}
+                style={galleryItemStyle(index)}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onClick={() => handleClick(index)}
               >
                 <img
                   src={`spotlight/spotlight-${num}.jpg`}
                   alt={`Spotlight ${num}`}
-                  style={styles.image(index === currentExpandedIndex)}
+                  style={
+                    index === currentExpandedIndex
+                      ? IMAGE_EXPANDED
+                      : IMAGE_COLLAPSED
+                  }
                 />
               </div>
             ),

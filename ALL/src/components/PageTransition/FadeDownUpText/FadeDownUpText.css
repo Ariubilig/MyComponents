@@ -1,0 +1,77 @@
+.page-transition-container {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  pointer-events: none;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  will-change: clip-path;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-transition-content {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+.page-transition-overlay::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+}
+.page-transition-overlay[style*="background-image"]::after {
+  opacity: 1;
+}
+.page-transition-container.transitioning {
+  overflow: hidden;
+}
+.page-transition-content > div {
+  width: 100%;
+}
+.page-transition-overlay {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.page-transition-route-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-align: center;
+  opacity: 0;
+  z-index: 2;
+  position: relative;
+  will-change: opacity;
+  background: transparent;
+  color: var(--textS);
+}
+
+@media (min-width: 768px) {
+  .page-transition-route-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-transition-route-text {
+    font-size: 1.8rem;
+  }
+}
