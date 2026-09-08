@@ -9,6 +9,7 @@ import BlockPageTransition from "./components/PageTransition/BlockPageTransition
 import FadeDownDown from "./components/PageTransition/FadeDownDown/App";
 import FadeDownUp from "./components/PageTransition/FadeDownUp/App";
 import FadeDownUpText from "./components/PageTransition/FadeDownUpText/App";
+import FadeVeil from "./components/PageTransition/FadeVeil/App";
 import Marquee from "./components/Marquee/App";
 import Preloader from "./components/Preloader/OneOneWord/App";
 import ScrollSmoother from "./components/ScrollSmoother/App";
@@ -130,6 +131,16 @@ export const tests: Test[] = [
     blurb: "Lenis-driven carousel with per-slide marquee captions and progress bars.",
     source: "src/components/Slides",
     Component: Slides,
+  },
+  {
+    path: "fade-veil",
+    title: "FadeVeil",
+    group: "page transitions",
+    nested: true,
+    blurb:
+      "Fades to the theme's own background colour, swaps the route, fades back.",
+    source: "src/components/PageTransition/FadeVeil",
+    Component: FadeVeil,
   },
   {
     path: "block-page-transition",

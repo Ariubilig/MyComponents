@@ -1,0 +1,66 @@
+.fade-veil {
+  position: relative;
+
+  /*
+   * `dvh` with a `vh` fallback for browsers that lack it. On mobile `100vh` is
+   * the viewport with the browser chrome *retracted*, so a `100vh` box is
+   * taller than what you can actually see and hangs below the fold.
+   */
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  /*
+   * The ground the page sits on, and the reason `contentScale` does not show a
+   * seam. Scaling the content below 1 shrinks it away from this box and opens a
+   * gutter on all four sides — 9px and 6px at the default 0.985 on a 1200x800
+   * viewport. Without a background here that gutter is the browser canvas,
+   * which is white whatever the theme, and the half-faded veil over it reads as
+   * a pale frame around the page. Invisible in light mode, where the canvas
+   * happens to match; a light band in dark mode.
+   *
+   * Painting it the veil colour means the gutter is the same colour as the
+   * thing fading in over it, in either theme, so there is nothing to see.
+   */
+  background: var(--fade-veil-color, #ffffff);
+}
+
+.fade-veil__content {
+  min-height: 100vh;
+  min-height: 100dvh;
+  /*
+   * The origin the optional `contentScale` recedes towards. Centred, so the
+   * page shrinks in place rather than towards a corner — off-centre reads as a
+   * move, and this transition is not supposed to move.
+   */
+  transform-origin: 50% 50%;
+}
+
+.fade-veil__veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background: var(--fade-veil-color, #ffffff);
+  opacity: 0;
+
+  /* Idle, it is a transparent sheet over the whole page — let clicks through. */
+  pointer-events: none;
+}
+
+/*
+ * While a transition runs the veil does the opposite: it swallows clicks, so a
+ * second navigation cannot be queued behind the one in flight and nothing under
+ * the cover can be hit blind.
+ *
+ * `will-change` is scoped to the same window. Left on permanently it would hold
+ * a compositor layer for the whole page — the exact cost the hint is meant to
+ * buy back — for the few seconds this is ever actually animating.
+ */
+.fade-veil.is-covering .fade-veil__veil {
+  pointer-events: auto;
+  will-change: opacity;
+}
+
+.fade-veil.is-covering .fade-veil__content {
+  will-change: transform;
+}

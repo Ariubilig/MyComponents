@@ -1,0 +1,96 @@
+/*
+ * Harness-only: the content the veil plays over.
+ *
+ * Everything here is a `theme.css` token, so the page and the veil are the same
+ * colour in both themes — which is the whole point of the component and the one
+ * thing a hardcoded stage could not show.
+ */
+.veil-stage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 6rem 1.5rem;
+
+  background: var(--color-bg);
+  color: var(--textDefault);
+  font-family: system-ui, sans-serif;
+}
+
+.veil-stage__inner {
+  max-width: 34rem;
+}
+
+/* The only thing that differs between the two halves. */
+.veil-stage__marker {
+  margin: 0 0 0.5rem;
+  color: var(--textS);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+}
+
+.veil-stage h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.veil-stage__copy {
+  margin: 0 0 2rem;
+  color: var(--textM);
+  line-height: 1.6;
+}
+
+.veil-stage__replay {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.veil-stage__replay:hover {
+  background: var(--btn-hover);
+}
+
+.veil-stage__theme {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--divider);
+}
+
+.veil-stage__label {
+  margin-right: 0.25rem;
+  color: var(--textS);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+}
+
+.veil-stage__theme button {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--divider);
+  border-radius: 999px;
+  background: none;
+  color: var(--textM);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.veil-stage__theme button.is-active {
+  border-color: transparent;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.veil-stage__path {
+  margin: 1.5rem 0 0;
+  color: var(--textS);
+  font-size: 0.8125rem;
+}
