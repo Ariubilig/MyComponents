@@ -49,11 +49,12 @@ function TestChrome() {
   const { pathname } = useLocation();
 
   /*
-   * Canonicalise the trailing slash before rendering anything. A component is
-   * free to reference its assets relatively — SpotLight ships `src="spotlight/
-   * spotlight-1.jpg"` — and a relative URL resolves against a different base on
-   * `/spotlight/` than on `/spotlight`, 404ing every image on a URL the router
-   * otherwise matches happily.
+   * Canonicalise the trailing slash before rendering anything. A relative asset
+   * URL resolves against a different base on `/spotlight/` than on `/spotlight`,
+   * so a component that shipped one would 404 every image on a URL the router
+   * otherwise matches happily. Components in here reference `public/` absolutely
+   * and no longer depend on this, but it still keeps the two spellings of a path
+   * from being two different pages.
    */
   if (pathname.length > 1 && pathname.endsWith("/")) {
     return <Navigate to={pathname.replace(/\/+$/, "")} replace />;

@@ -1,6 +1,22 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const EASE = "cubic-bezier(0.075, 0.82, 0.165, 1)";
+
+/* Hover-vs-tap is a breakpoint decision, not a per-pixel one, so the mode is
+ * read from a media query. The old `resize` listener fired on every pixel of a
+ * window drag and unconditionally reset the gallery each time — a 1px nudge on
+ * a desktop threw away the open panel. This fires only when 1000px is crossed. */
+const DESKTOP_QUERY = "(min-width: 1000px)";
+
+const COLLAPSED_WIDTH = 20;
+const GAP = 5;
+const STRIDE = COLLAPSED_WIDTH + GAP;
+const HEIGHT = 400;
+
+/* Item count and open width move together, so they travel together rather than
+ * as two states that can disagree. */
+const DESKTOP = { itemCount: 20, expandedWidth: 400 };
+const MOBILE = { itemCount: 10, expandedWidth: 100 };
 
 /* Static style objects, hoisted out of render. Nothing here depends on props
  * or state, and hovering re-renders all twenty items — so rebuilding these
@@ -26,24 +42,35 @@ const CONTAINER = {
   transformOrigin: "center",
 };
 
-const GALLERY = {
+/* The strip is a fixed pixel width centred by the flex parent. The previous
+ * build measured the parent through a ref instead — and a ref is null on the
+ * first render, so the strip painted at left: -437px and then slid in from the
+ * left under the live 1s transition once the measurement landed. That entrance
+ * was an artefact of the measurement, not a design. Strip width depends only on
+ * the item count, so it is computed and the ref is gone. */
+const STRIP = {
   position: "relative",
-  width: "100%",
-  height: "400px",
-  margin: "0 auto",
+  height: `${HEIGHT}px`,
+  flexShrink: 0,
 };
 
-const GALLERY_ITEM = {
+/* The box is always `expandedWidth` wide and never resizes: `clip-path` decides
+ * how much of it you see and `transform` decides where it sits, so a hover
+ * costs paint and composite but no layout at all. Both properties are named
+ * explicitly — under `transition: all`, every property added to this object
+ * would silently animate for a second. */
+const FRAME = {
   position: "absolute",
   top: 0,
-  height: "400px",
+  left: 0,
+  height: `${HEIGHT}px`,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   background: "#000",
-  transition: `all 1s ${EASE}`,
   overflow: "hidden",
-  willChange: "left, width",
+  transition: `transform 1s ${EASE}, clip-path 1s ${EASE}`,
+  willChange: "transform, clip-path",
 };
 
 /* The image style only ever takes two shapes, so they are constants rather
@@ -58,134 +85,96 @@ const IMAGE_EXPANDED = { ...IMAGE_BASE, transform: "scale(1)" };
 const IMAGE_COLLAPSED = { ...IMAGE_BASE, transform: "scale(1.5)" };
 
 const SpotlightGallery = () => {
-  const [currentExpandedIndex, setCurrentExpandedIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [clickedItems, setClickedItems] = useState(new Set());
-  const [itemCount, setItemCount] = useState(20);
-  const containerRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(
+    () => window.matchMedia(DESKTOP_QUERY).matches,
+  );
+  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [clickedItems, setClickedItems] = useState(() => new Set());
 
-  const collapsedWidth = 20;
-  const expandedWidth = 400;
-  const mobileExpandedWidth = 100;
-  const gap = 5;
+  const { itemCount, expandedWidth } = isDesktop ? DESKTOP : MOBILE;
 
-  // Check screen size
   useEffect(() => {
-    const checkScreenSize = () => {
-      const newIsMobile = window.innerWidth < 1000;
-      setIsMobile(newIsMobile);
-      setItemCount(newIsMobile ? 10 : 20);
+    const query = window.matchMedia(DESKTOP_QUERY);
+
+    /* Only a breakpoint crossing invalidates the gallery, and it genuinely
+     * does: the item count changes, so a remembered index can point past the
+     * end and the mobile tap history no longer means anything. */
+    const onChange = (event) => {
+      setIsDesktop(event.matches);
+      setExpandedIndex(0);
       setClickedItems(new Set());
-      setCurrentExpandedIndex(0);
     };
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
   }, []);
 
-  // Calculate positions for each item
-  const calculatePositions = (expandedIndex) => {
-    const positions = [];
-    const totalItems = itemCount;
-    const currentExpandedWidth = isMobile ? mobileExpandedWidth : expandedWidth;
+  /* Every item owns a STRIDE-wide slot. The single open panel is the only thing
+   * that pushes, and it pushes exactly `push` onto everything after it — which
+   * is why the strip's total width is constant and it never re-centres as the
+   * open panel travels along it. */
+  const push = expandedWidth - COLLAPSED_WIDTH;
+  const stripWidth = expandedWidth + (itemCount - 1) * STRIDE;
 
-    // Calculate total width needed
-    let totalWidth = 0;
-    for (let i = 0; i < totalItems; i++) {
-      if (i === expandedIndex) {
-        totalWidth += currentExpandedWidth + gap;
-      } else {
-        totalWidth += collapsedWidth + gap;
-      }
-    }
-    totalWidth -= gap;
-
-    // Calculate starting position to center the gallery
-    const containerWidth = containerRef.current?.offsetWidth || 0;
-    const startLeft = (containerWidth - totalWidth) / 2;
-
-    let currentLeft = startLeft;
-
-    for (let i = 0; i < totalItems; i++) {
-      if (i === expandedIndex) {
-        positions.push({
-          left: currentLeft,
-          width: currentExpandedWidth,
-        });
-        currentLeft += currentExpandedWidth + gap;
-      } else {
-        positions.push({
-          left: currentLeft,
-          width: collapsedWidth,
-        });
-        currentLeft += collapsedWidth + gap;
-      }
-    }
-
-    return positions;
-  };
-
-  const positions = calculatePositions(currentExpandedIndex);
-
-  // Handle desktop mouse enter
   const handleMouseEnter = (index) => {
-    if (!isMobile) {
-      setCurrentExpandedIndex(index);
-    }
+    if (isDesktop) setExpandedIndex(index);
   };
 
-  // Handle mobile click
   const handleClick = (index) => {
-    if (isMobile) {
-      const newClickedItems = new Set(clickedItems);
+    if (isDesktop) return;
 
-      if (newClickedItems.has(index) && currentExpandedIndex === index) {
-        newClickedItems.delete(index);
-        const nextIndex =
-          newClickedItems.size > 0 ? Math.min(...newClickedItems) : 0;
-        setCurrentExpandedIndex(nextIndex);
-      } else {
-        newClickedItems.add(index);
-        setCurrentExpandedIndex(index);
-      }
+    const next = new Set(clickedItems);
 
-      setClickedItems(newClickedItems);
+    if (next.has(index) && expandedIndex === index) {
+      next.delete(index);
+      setExpandedIndex(next.size > 0 ? Math.min(...next) : 0);
+    } else {
+      next.add(index);
+      setExpandedIndex(index);
     }
+
+    setClickedItems(next);
   };
 
-  /* The only three values that genuinely vary per item. */
-  const galleryItemStyle = (index) => ({
-    ...GALLERY_ITEM,
-    left: `${positions[index]?.left || 0}px`,
-    width: `${positions[index]?.width || collapsedWidth}px`,
-    cursor: isMobile ? "pointer" : "default",
-  });
+  /* The only values that vary per item. */
+  const frameStyle = (index) => {
+    /* Half the hidden box on each side, so the window stays centred on the
+     * image exactly as `overflow: hidden` on a narrow box used to. */
+    const clip = index === expandedIndex ? 0 : push / 2;
+    const offset = index * STRIDE + (index > expandedIndex ? push : 0);
+
+    return {
+      ...FRAME,
+      width: `${expandedWidth}px`,
+      /* Shifted left by the clip so the *visible* edge lands on `offset`.
+       * Both halves run on one transition, so the visible edge holds still
+       * while the window opens, frame for frame. */
+      transform: `translateX(${offset - clip}px)`,
+      clipPath: `inset(0px ${clip}px)`,
+      cursor: isDesktop ? "default" : "pointer",
+    };
+  };
 
   return (
     <div style={STAGE}>
       <div style={CONTAINER}>
-        <div style={GALLERY} ref={containerRef}>
-          {Array.from({ length: itemCount }, (_, i) => i + 1).map(
-            (num, index) => (
-              <div
-                key={index}
-                style={galleryItemStyle(index)}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onClick={() => handleClick(index)}
-              >
-                <img
-                  src={`spotlight/spotlight-${num}.jpg`}
-                  alt={`Spotlight ${num}`}
-                  style={
-                    index === currentExpandedIndex
-                      ? IMAGE_EXPANDED
-                      : IMAGE_COLLAPSED
-                  }
-                />
-              </div>
-            ),
-          )}
+        <div style={{ ...STRIP, width: `${stripWidth}px` }}>
+          {Array.from({ length: itemCount }, (_, index) => (
+            <div
+              key={index}
+              style={frameStyle(index)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onClick={() => handleClick(index)}
+            >
+              <img
+                src={`/spotlight/spotlight-${index + 1}.jpg`}
+                alt={`Spotlight ${index + 1}`}
+                style={
+                  index === expandedIndex ? IMAGE_EXPANDED : IMAGE_COLLAPSED
+                }
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

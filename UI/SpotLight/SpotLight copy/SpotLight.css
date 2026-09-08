@@ -1,7 +1,11 @@
+/* Static counterpart to SpotLight.jsx. The per-item `transform` and
+ * `clip-path` are computed from the open index and set inline; everything that
+ * does not vary per item lives here. */
+
 .spotlight {
   position: relative;
   width: 100%;
-  height: 100svh;
+  height: 100vh;
   background-color: #000000;
   overflow: hidden;
 }
@@ -19,25 +23,33 @@
   transform-origin: center;
 }
 
+/* Fixed pixel width — `width` is set inline from the item count, never
+ * measured, so the strip is centred correctly on the very first paint. */
 .spotlight .spotlight-container .spotlight-gallery {
   position: relative;
-  width: 100%;
   height: 400px;
-  margin: 0 auto;
+  flex-shrink: 0;
 }
 
+/* The box is always the expanded width and never resizes. `clip-path` decides
+ * how much of it is visible and `transform` decides where it sits, so opening a
+ * panel costs paint and composite but no layout. Both are named explicitly:
+ * under `transition: all`, every property added here would animate for 1s. */
 .spotlight .spotlight-gallery .spotlight-gallery-item {
   position: absolute;
   top: 0;
-  width: 20px;
+  left: 0;
+  width: 400px;
   height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #000;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   overflow: hidden;
-  will-change: left, width;
+  transition:
+    transform 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+    clip-path 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  will-change: transform, clip-path;
 }
 
 .spotlight .spotlight-gallery .spotlight-gallery-item img {
