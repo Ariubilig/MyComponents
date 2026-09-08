@@ -56,7 +56,8 @@ export const tests: Test[] = [
     path: "text-highlight",
     title: "TextHighlight",
     group: "UI",
-    blurb: "Marker-pen highlight that sweeps across text. Four triggers, four directions.",
+    blurb:
+      "Marker-pen highlight that sweeps across text. Four triggers, four directions.",
     source: "src/components/TextHighlight",
     Component: TextHighlight,
   },
@@ -72,7 +73,8 @@ export const tests: Test[] = [
     path: "spotlight",
     title: "SpotLight",
     group: "UI",
-    blurb: "Accordion gallery: hover to expand a slat, tap instead below 1000px.",
+    blurb:
+      "Accordion gallery: hover to expand a slat, tap instead below 1000px.",
     source: "src/components/SpotLight",
     Component: SpotLight,
   },
@@ -80,7 +82,8 @@ export const tests: Test[] = [
     path: "overview",
     title: "Overview",
     group: "UI",
-    blurb: "Project table that blurs every row except the one under the cursor.",
+    blurb:
+      "Project table that blurs every row except the one under the cursor.",
     source: "src/components/overview",
     Component: Overview,
   },
@@ -88,7 +91,8 @@ export const tests: Test[] = [
     path: "hover-line-show",
     title: "HoverLineShow",
     group: "UI",
-    blurb: "Client list whose underline grows from the left and retracts to the right.",
+    blurb:
+      "Client list whose underline grows from the left and retracts to the right.",
     source: "src/components/HoverLineShow",
     Component: HoverLineShow,
   },
@@ -112,7 +116,8 @@ export const tests: Test[] = [
     path: "preloader-one-word",
     title: "Preloader · OneOneWord",
     group: "UX",
-    blurb: "Name-cycling splash, guarded to once per session. Replay clears the flag.",
+    blurb:
+      "Name-cycling splash, guarded to once per session. Replay clears the flag.",
     source: "src/components/Preloader/OneOneWord",
     Component: Preloader,
   },
@@ -128,7 +133,8 @@ export const tests: Test[] = [
     path: "slides",
     title: "Slides",
     group: "UX",
-    blurb: "Lenis-driven carousel with per-slide marquee captions and progress bars.",
+    blurb:
+      "Lenis-driven carousel with per-slide marquee captions and progress bars.",
     source: "src/components/Slides",
     Component: Slides,
   },
@@ -147,7 +153,8 @@ export const tests: Test[] = [
     title: "BlockPageTransition",
     group: "page transitions",
     nested: true,
-    blurb: "Blocks wipe across, the route swaps behind them, they wipe back out.",
+    blurb:
+      "Blocks wipe across, the route swaps behind them, they wipe back out.",
     source: "src/components/PageTransition/BlockPageTransition",
     Component: BlockPageTransition,
   },

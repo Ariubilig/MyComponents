@@ -27,5 +27,7 @@ export const smootherScroller: Scroller = {
     else window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
   },
 
-  content: () => (ScrollSmoother.get()?.content() as HTMLElement | undefined) ?? document.documentElement,
+  content: () =>
+    (ScrollSmoother.get()?.content() as HTMLElement | undefined) ??
+    document.documentElement,
 };

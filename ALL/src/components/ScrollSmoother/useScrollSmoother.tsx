@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export const useScrollSmoother = (
   wrapperRef: RefObject<HTMLDivElement | null>,
-  { enabled = true } = {}
+  { enabled = true } = {},
 ) => {
   useEffect(() => {
     if (!enabled || !wrapperRef.current) return;
@@ -16,9 +16,8 @@ export const useScrollSmoother = (
     const ctx = gsap.context(() => {
       ScrollSmoother.get()?.kill();
 
-      const content = wrapperRef.current!.querySelector<HTMLElement>(
-        "#smooth-content"
-      );
+      const content =
+        wrapperRef.current!.querySelector<HTMLElement>("#smooth-content");
       if (!content) return;
 
       ScrollSmoother.create({

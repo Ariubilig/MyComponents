@@ -21,7 +21,11 @@ export default function App() {
       {/* Hover: follows the pointer in and back out again. */}
       <section>
         <h2>hover</h2>
-        <TextHighlight as="p" triggerType="hover" highlightColor="hsl(180 70% 80%)">
+        <TextHighlight
+          as="p"
+          triggerType="hover"
+          highlightColor="hsl(180 70% 80%)"
+        >
           Draws on pointer enter and undraws on leave, so it reads as a state
           rather than a one-shot.
         </TextHighlight>
@@ -74,7 +78,11 @@ export default function App() {
       {/* The highlight is a background on an inline span, so it wraps. */}
       <section>
         <h2>multi-line</h2>
-        <TextHighlight as="p" className="th-demo__wrap" highlightColor="hsl(25 90% 80%)">
+        <TextHighlight
+          as="p"
+          className="th-demo__wrap"
+          highlightColor="hsl(25 90% 80%)"
+        >
           Because the highlight is a background rather than a box behind the
           text, it follows every line break instead of painting one rectangle
           over the whole paragraph. Resize the window and it re-wraps with the

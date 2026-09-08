@@ -30,7 +30,8 @@ export interface Scroller {
 /** Default adapter: the native window scroll. */
 export const windowScroller: Scroller = {
   get: () => window.scrollY,
-  set: (top, smooth) => window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" }),
+  set: (top, smooth) =>
+    window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" }),
   content: () => document.documentElement,
 };
 
@@ -48,9 +49,14 @@ const IDLE_FRAMES = 20;
 /** Thumb height floor in px. Keep in sync with `.scrollbar__thumb { height }`. */
 const MIN_THUMB = 20;
 
-const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
+const clamp = (v: number, lo: number, hi: number): number =>
+  Math.min(hi, Math.max(lo, v));
 
-export default function ScrollBar({ scroller = windowScroller, side = "right", className }: ScrollBarProps) {
+export default function ScrollBar({
+  scroller = windowScroller,
+  side = "right",
+  className,
+}: ScrollBarProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -58,7 +64,9 @@ export default function ScrollBar({ scroller = windowScroller, side = "right", c
   // Held in a ref so a caller passing an inline object doesn't tear down the
   // listeners on every render.
   const scrollerRef = useRef(scroller);
-  useEffect(() => { scrollerRef.current = scroller; }, [scroller]);
+  useEffect(() => {
+    scrollerRef.current = scroller;
+  }, [scroller]);
 
   useEffect(() => {
     const root = rootRef.current!;
@@ -79,7 +87,10 @@ export default function ScrollBar({ scroller = windowScroller, side = "right", c
       const view = window.innerHeight;
       const trackH = track.clientHeight;
       // Thumb height is proportional to the visible fraction, with a floor.
-      const thumbH = Math.max(MIN_THUMB, (view / Math.max(scrollH, 1)) * trackH);
+      const thumbH = Math.max(
+        MIN_THUMB,
+        (view / Math.max(scrollH, 1)) * trackH,
+      );
 
       m.max = scrollH - view;
       m.range = trackH - thumbH;
@@ -121,7 +132,10 @@ export default function ScrollBar({ scroller = windowScroller, side = "right", c
     }
 
     function scrollToPct(pct: number, smooth: boolean): void {
-      scrollerRef.current.set(clamp(pct, 0, 1) * m.max, smooth && !reduceMotion.matches);
+      scrollerRef.current.set(
+        clamp(pct, 0, 1) * m.max,
+        smooth && !reduceMotion.matches,
+      );
     }
 
     // Pointer capture keeps the drag alive off the thumb without document-level
@@ -146,7 +160,8 @@ export default function ScrollBar({ scroller = windowScroller, side = "right", c
     function onThumbUp(e: PointerEvent): void {
       if (!drag.active) return;
       drag.active = false;
-      if (thumb.hasPointerCapture(e.pointerId)) thumb.releasePointerCapture(e.pointerId);
+      if (thumb.hasPointerCapture(e.pointerId))
+        thumb.releasePointerCapture(e.pointerId);
       root.classList.remove("is-dragging");
     }
 
@@ -160,7 +175,10 @@ export default function ScrollBar({ scroller = windowScroller, side = "right", c
       wake();
     }
 
-    function onResize(): void { measure(); wake(); }
+    function onResize(): void {
+      measure();
+      wake();
+    }
 
     measure();
     tick();

@@ -63,17 +63,19 @@ export default function Reveal({
       document.fonts.ready.then(() => {
         if (!isActive || !containerRef.current) return;
 
-        splitRefs.current.forEach(split => split?.revert());
+        splitRefs.current.forEach((split) => split?.revert());
         splitRefs.current = [];
         targets.current = [];
 
         const container = containerRef.current;
 
-        const elements: HTMLElement[] = container.hasAttribute("data-text-wrapper")
+        const elements: HTMLElement[] = container.hasAttribute(
+          "data-text-wrapper",
+        )
           ? (Array.from(container.children) as HTMLElement[])
           : [container];
 
-        elements.forEach(element => {
+        elements.forEach((element) => {
           try {
             const splitOptions =
               type === "chars"
@@ -101,7 +103,8 @@ export default function Reveal({
 
               if (textIndent && textIndent !== "0px") {
                 if (split.lines.length > 0) {
-                  (split.lines[0] as HTMLElement).style.paddingLeft = textIndent;
+                  (split.lines[0] as HTMLElement).style.paddingLeft =
+                    textIndent;
                 }
 
                 element.style.textIndent = "0";
@@ -112,12 +115,15 @@ export default function Reveal({
 
             targets.current.push(...(pieces as Element[]));
           } catch (error) {
-            console.warn(`TextReveal: Failed to split element (type=${type})`, error);
+            console.warn(
+              `TextReveal: Failed to split element (type=${type})`,
+              error,
+            );
           }
         });
 
         if (!isActive) {
-          localSplits.forEach(split => split?.revert());
+          localSplits.forEach((split) => split?.revert());
           return;
         }
 
@@ -158,9 +164,9 @@ export default function Reveal({
       return () => {
         isActive = false;
 
-        splitRefs.current.forEach(split => split?.revert());
+        splitRefs.current.forEach((split) => split?.revert());
 
-        ScrollTrigger.getAll().forEach(st => {
+        ScrollTrigger.getAll().forEach((st) => {
           if (st.trigger === containerRef.current) {
             st.kill();
           }
@@ -178,7 +184,7 @@ export default function Reveal({
         ease,
         scrollTriggerStart,
       ],
-    }
+    },
   );
 
   // Hide initially to prevent flash before split setup

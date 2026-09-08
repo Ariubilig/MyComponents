@@ -11,6 +11,8 @@ import TransitionRoutes from "../TransitionStage";
  */
 export default function App() {
   return (
-    <FadeDownDown><TransitionRoutes base="fade-down-down" /></FadeDownDown>
+    <FadeDownDown>
+      <TransitionRoutes base="fade-down-down" />
+    </FadeDownDown>
   );
 }

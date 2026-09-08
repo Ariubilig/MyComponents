@@ -1,7 +1,12 @@
 import gsap from "gsap";
 import slides from "./img.js";
 
-export function createAndAnimateSlide(root, index, isScrollingForward, initMarqueeAnimation) {
+export function createAndAnimateSlide(
+  root,
+  index,
+  isScrollingForward,
+  initMarqueeAnimation,
+) {
   const carousel = root;
   if (!carousel) return;
 
@@ -154,7 +159,7 @@ export function createAndAnimateSlide(root, index, isScrollingForward, initMarqu
 export function buildProgressBars(root) {
   const progressRoot = root.querySelector(".carousel-progress");
   if (!progressRoot) return;
-  
+
   progressRoot.innerHTML = "";
   for (let i = 0; i < slides.length; i += 1) {
     const bar = document.createElement("div");
@@ -166,7 +171,10 @@ export function buildProgressBars(root) {
 export function updateProgressBars(root, progress) {
   const bars = root.querySelectorAll(".progress-bar");
   bars.forEach((bar, index) => {
-    const barProgress = Math.min(Math.max(progress * slides.length - index, 0), 1);
+    const barProgress = Math.min(
+      Math.max(progress * slides.length - index, 0),
+      1,
+    );
     bar.style.setProperty("--progress", barProgress);
   });
 }

@@ -1,16 +1,22 @@
-import React from 'react';
-import './Preloader.css';
+import React from "react";
+import "./Preloader.css";
 
-const PreloaderNames = ["RARI", "EMURACS", "SITAN", "SANDAN", "BELLATTIX", "NOEL"];
+const PreloaderNames = [
+  "RARI",
+  "EMURACS",
+  "SITAN",
+  "SANDAN",
+  "BELLATTIX",
+  "NOEL",
+];
 
 const Preloader = ({ onFinish }) => {
   const [currentLoadName, setCurrentLoadName] = React.useState(0);
   const [shouldShow, setShouldShow] = React.useState(true);
 
   React.useEffect(() => {
-
     // Check if session has already loaded
-    const sessionLoaded = sessionStorage.getItem('sessionLoaded');
+    const sessionLoaded = sessionStorage.getItem("sessionLoaded");
     if (sessionLoaded) {
       // Skip Preloader screen if already loaded session
       setShouldShow(false);
@@ -25,7 +31,7 @@ const Preloader = ({ onFinish }) => {
 
     const timer = setTimeout(() => {
       // Mark the site has been loaded in session
-      sessionStorage.setItem('sessionLoaded', 'true');
+      sessionStorage.setItem("sessionLoaded", "true");
       onFinish();
     }, 3000);
 
@@ -41,9 +47,7 @@ const Preloader = ({ onFinish }) => {
   }
 
   return (
-    <div className="Preloader-screen">
-      {PreloaderNames[currentLoadName]}
-    </div>
+    <div className="Preloader-screen">{PreloaderNames[currentLoadName]}</div>
   );
 };
 
